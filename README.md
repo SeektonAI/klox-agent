@@ -17,7 +17,9 @@ claude plugin marketplace add SeektonAI/klox-agent
 claude plugin install klox@klox
 ```
 
-Then run `/mcp`, select `klox` and authenticate in the browser. You can review or revoke access at any time at https://klox.ai/connected-apps.
+Then run `/reload-plugins` (or restart Claude Code) so the plugin loads, run `/mcp`, select `klox` and authenticate in the browser.
+
+To update, run `claude plugin marketplace update klox`, then `claude plugin update klox@klox`, and restart Claude Code. You can review or revoke access at any time at https://klox.ai/connected-apps.
 
 ## Codex
 

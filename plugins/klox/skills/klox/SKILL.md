@@ -7,13 +7,13 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.0.0. The latest version is always at https://klox.ai/agent/skill.md.
+Skill version 1.0.1. The latest version is always at https://klox.ai/agent/skill.md.
 
 ## Before you start
 
 - Call `list_workflows`. If the `klox` tools are missing or not authorized, follow https://klox.ai/agent to connect, then continue.
 - Continuing earlier work: call `get_workflow` on that canvas and read the node titled `Brief` first. The canvas is the whole project state; there is no chat history on the Klox side, and another agent or the user may have changed it since.
-- Give the user the canvas `url` early so they can watch and edit alongside you.
+- Give the user the canvas `previewUrl` early so they can watch alongside you; it opens without signing in and has an Edit button for them. If it is null, give `url` instead.
 
 ## Making a video from scratch
 
@@ -32,7 +32,7 @@ Skill version 1.0.0. The latest version is always at https://klox.ai/agent/skill
 5. **Ask before spending credits.** Show the plan: which nodes you will generate and in what order. Every `run_node` spends the user's credits, and each task reports its `credits` when it starts, so tell the user what was spent as you go. Only generate what the user asked for.
 6. **Generate upstream first**: text nodes that need generating, then keyframe images, then videos, then compose. Nodes that do not depend on each other can run at the same time. Poll `get_task`, waiting at least `retryAfterMs` between calls. `run_node` refuses a node whose upstream generation nodes have no result yet and names them.
 7. **Review before moving on.** Look at each keyframe (the output `url` is public) and fix weak ones before animating them; a bad keyframe makes a bad clip. Tell the user what you are keeping and what you are redoing.
-8. **Compose** runs once every clip has a result. Composing costs no credits. Give the user the canvas url to watch the film.
+8. **Compose** runs once every clip has a result. Composing costs no credits. Give the user the `previewUrl` to watch the film.
 
 ## Changing an existing project
 
