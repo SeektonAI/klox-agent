@@ -1,6 +1,6 @@
 {
   "name": "klox",
-  "description": "Klox plugins for Claude Code",
+  "description": "Klox plugins for Claude Code and Codex",
   "owner": {
     "name": "Klox",
     "email": "support@klox.ai"

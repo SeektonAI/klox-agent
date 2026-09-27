@@ -1,0 +1,24 @@
+{
+  "name": "klox",
+  "version": "1.0.0",
+  "description": "Build and edit AI videos on Klox canvases: connects the Klox MCP server and adds the Klox skill",
+  "author": {
+    "name": "Klox",
+    "email": "support@klox.ai",
+    "url": "https://klox.ai"
+  },
+  "homepage": "https://klox.ai/agent",
+  "keywords": ["video", "ai-video", "storyboard", "mcp"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Klox",
+    "shortDescription": "Create AI videos on a shared canvas",
+    "longDescription": "Build and edit AI videos on Klox canvases: connects the Klox MCP server and adds the Klox skill",
+    "developerName": "Klox",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://klox.ai",
+    "defaultPrompt": ["Create a short product video on Klox."]
+  }
+}

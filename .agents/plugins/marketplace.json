@@ -1,0 +1,20 @@
+{
+  "name": "klox",
+  "interface": {
+    "displayName": "Klox"
+  },
+  "plugins": [
+    {
+      "name": "klox",
+      "source": {
+        "source": "local",
+        "path": "./plugins/klox"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
