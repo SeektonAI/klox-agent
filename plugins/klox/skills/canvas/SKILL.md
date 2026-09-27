@@ -1,13 +1,13 @@
 ---
-name: klox
+name: canvas
 description: Create and edit AI videos on Klox canvases - plan a short video with the user, build the script, storyboard, image and video shots on a Klox workflow canvas, generate them with the user's credits, and cut them into a film. Use when the user wants to make or change a video, ad, storyboard, image or video generation with Klox, or mentions Klox, klox.ai or a Klox canvas.
 ---
 
-# Klox
+# Klox Canvas
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.0.1. The latest version is always at https://klox.ai/agent/skill.md.
+Skill version 1.0.2. The latest version is always at https://klox.ai/agent/skill.md.
 
 ## Before you start
 

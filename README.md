@@ -46,4 +46,4 @@ For clients without plugin support, follow https://klox.ai/agent to add MCP and 
 
 This repository is published automatically from the Klox main repository. Changes made here are overwritten on the next release; please open an issue instead of a pull request.
 
-Both clients share `plugins/klox/.mcp.json` and `plugins/klox/skills/klox/SKILL.md`. When releasing changes to bundled plugin content, bump the version and keep the two plugin manifest versions and the skill version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
+Both clients share `plugins/klox/.mcp.json` and `plugins/klox/skills/canvas/SKILL.md`. When releasing changes to bundled plugin content, bump the version and keep the two plugin manifest versions and the skill version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
