@@ -1,0 +1,15 @@
+{
+  "name": "klox",
+  "description": "Klox plugins for Claude Code",
+  "owner": {
+    "name": "Klox",
+    "email": "support@klox.ai"
+  },
+  "plugins": [
+    {
+      "name": "klox",
+      "source": "./plugins/klox",
+      "description": "Build and edit AI videos on Klox canvases: MCP connection plus the Klox working method"
+    }
+  ]
+}
