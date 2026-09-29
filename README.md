@@ -1,12 +1,52 @@
 # Klox for AI agents
 
-Plugins that let AI coding agents build and edit AI videos on [Klox](https://klox.ai) canvases.
+Let your AI coding agent build and edit AI videos on [Klox](https://klox.ai) canvases. Klox is a visual canvas for AI video creation: an agent lays out the script, storyboard and shots as a node graph, and you keep editing the same canvas in the browser.
+
+This repository contains the Klox **MCP server** connection and the Klox **agent skill**, packaged as a plugin for Claude Code and Codex.
+
+- MCP server: `https://klox.ai/mcp` (remote, Streamable HTTP, OAuth 2.0 sign-in)
+- Skill: [`plugins/klox/skills/canvas/SKILL.md`](plugins/klox/skills/canvas/SKILL.md), also served at https://klox.ai/agent/skill.md
+- Setup guide: https://klox.ai/agent
 
 The easiest way to connect any agent is to send it this link and ask it to set Klox up:
 
 ```
 https://klox.ai/agent
 ```
+
+## What your agent can do
+
+- Plan a short video with you, then create a canvas with the script, storyboard, image and video shots.
+- Read and edit an existing canvas: rewrite prompts, change models, add, connect and remove nodes.
+- Upload your own images, video, audio or text as nodes.
+- Generate a node with your Klox credits, only if you allow it, and cut the results into a film.
+
+## Tools
+
+| Tool                                 | What it does                                                                      | Changes data   |
+| ------------------------------------ | --------------------------------------------------------------------------------- | -------------- |
+| `get_capabilities`                   | Node modes, models with their options, allowed connections                        | No             |
+| `list_workflows`                     | Your canvases, most recently updated first                                        | No             |
+| `get_workflow`                       | A whole canvas: nodes, files, latest task status and outputs, edges               | No             |
+| `get_task`                           | Status and outputs of a generation task                                           | No             |
+| `create_workflow`                    | Create an empty canvas                                                            | Adds           |
+| `apply_workflow_change`              | Add, update, connect, place and delete nodes and edges in one all-or-nothing edit | Can delete     |
+| `prepare_upload` / `complete_upload` | Upload a local file to use as a node                                              | Adds           |
+| `run_node`                           | Generate one node. **Spends credits**; needs the optional generate permission     | Spends credits |
+
+## Permissions and privacy
+
+When you connect, a Klox "Authorize app" page opens in your browser. Sign in, review the permissions and click Allow:
+
+- **Read and edit your workflows** (always requested): view canvases, create and change nodes, and upload files.
+- **Generate with your credits** (a checkbox, checked by default): start generations that spend credits from your balance. Uncheck it if you only want your agent to plan and edit; it then cannot spend credits.
+
+The page shows the app name the agent reports for itself, so only continue if you just started the connection. You can review or revoke access at any time at https://klox.ai/connected-apps. Your agent never sees your password; authorization uses OAuth in your browser.
+
+- [Privacy Policy](https://klox.ai/privacy-policy)
+- [Terms of Service](https://klox.ai/terms-of-service)
+
+You need a Klox account. Generating videos and images uses credits from your Klox plan; see https://klox.ai for current pricing.
 
 ## Claude Code
 
@@ -47,3 +87,7 @@ For clients without plugin support, follow https://klox.ai/agent to add MCP and 
 This repository is published automatically from the Klox main repository. Changes made here are overwritten on the next release; please open an issue instead of a pull request.
 
 Both clients share `plugins/klox/.mcp.json` and `plugins/klox/skills/canvas/SKILL.md`. When releasing changes to bundled plugin content, bump the version and keep the two plugin manifest versions and the skill version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
+
+## Support
+
+Questions or problems: open an issue here, or email support@klox.ai.

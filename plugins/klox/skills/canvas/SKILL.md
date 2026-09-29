@@ -7,11 +7,12 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.0.2. The latest version is always at https://klox.ai/agent/skill.md.
+Skill version 1.0.3. The latest version is always at https://klox.ai/agent/skill.md.
 
 ## Before you start
 
 - Call `list_workflows`. If the `klox` tools are missing or not authorized, follow https://klox.ai/agent to connect, then continue.
+- The user pasted a Klox link (`/canvas/<id>` or `/preview/<token>`): fetch it as Markdown (append `.md`) to get its `workflowId`, then call `get_workflow`. If it returns `workflow_not_found`, tell the user the canvas does not exist (for a preview link: that you cannot edit it, and they can still view it there); do not guess its contents.
 - Continuing earlier work: call `get_workflow` on that canvas and read the node titled `Brief` first. The canvas is the whole project state; there is no chat history on the Klox side, and another agent or the user may have changed it since.
 - Give the user the canvas `previewUrl` early so they can watch alongside you; it opens without signing in and has an Edit button for them. If it is null, give `url` instead.
 
