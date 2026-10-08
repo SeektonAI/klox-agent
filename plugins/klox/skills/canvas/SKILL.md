@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.1.0. The latest version is always at https://klox.ai/agent/skill.md.
+Skill version 1.2.0. The latest version is always at https://klox.ai/agent/skill.md.
 
 ## Before you start
 
@@ -47,7 +47,10 @@ Skill version 1.1.0. The latest version is always at https://klox.ai/agent/skill
 
 ## Using media from elsewhere
 
-If you or the user already have an image, video or audio file: `prepare_upload`, PUT the file to the returned URL with exactly the returned headers, `complete_upload`, then add it with `addFileNodes` in `apply_workflow_change` and connect it where it is needed, for example as a keyframe (`firstFrame`), a reference video (`video`), or a clip in compose (`video`).
+If you or the user already have an image, video or audio file: `prepare_upload`, PUT the file to the returned URL with exactly the returned headers, `complete_upload`. Then decide what the file is:
+
+- **The result of a node** — a shot or keyframe rendered with another tool or a local model, standing in for what an image, video or compose node would have generated: attach it with `import_node_output` (with a short `note` on where it came from). It becomes that node's current result and flows to compose and other downstream nodes like a generated one, so the storyboard stays intact. It costs no credits and is marked as imported. Rerunning the node later produces a newer result that takes over; the user can switch between versions on the canvas.
+- **Source material** — a reference video, a portrait, a product photo: add it with `addFileNodes` in `apply_workflow_change` and connect it where it is needed, for example as a keyframe (`firstFrame`) or a reference (`video`).
 
 ## Working on media locally
 
