@@ -1,6 +1,6 @@
 {
   "name": "klox",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Build and edit AI videos on Klox canvases: connects the Klox MCP server and adds the Klox skill",
   "author": {
     "name": "Klox",
