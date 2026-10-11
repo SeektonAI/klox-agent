@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.3.0. The latest version is always at https://klox.ai/agent/skill.md.
+Skill version 1.3.2. The latest version is always at https://klox.ai/agent/skill.md.
 
 ## Before you start
 
@@ -46,7 +46,7 @@ Anything that must look the same in more than one shot is an asset of the projec
 
 1. Read `get_assets`. If the canvas sits in the wrong project (the user made it on its own but it is part of a larger piece), ask them, then `move_workflow_to_project`.
 2. Create each asset with `save_asset`: `kind`, `name`, an `identity.description` and a first look with its own `description`.
-3. Make the references as their own image nodes, one view per image on a plain background, neutral light: for a main character a face close-up, front, three-quarter and profile for the identity, and a full-body front (and back, if the story turns them around) for each look. Generate them, review them with the user, then save the chosen outputs' `fileKey` with a `view` tag: identity views under `identity.references`, outfit views under the look's `references`. Never use a story shot as a reference: a flaw in it then repeats in every shot.
+3. Make the references as their own image nodes, one view per image on a plain background, neutral light: for a main character a face close-up, front, three-quarter and profile for the identity, and a full-body front (and back, if the story turns them around) for each look. Generate them, review them with the user, then save the chosen outputs' `fileKey` with a `view` tag: identity views under `identity.references`, outfit views under the look's `references`. Never use a story shot as a reference: a flaw in it then repeats in every shot. If the user brings a multi-panel character sheet, save it under the asset's or look's `designBoards`, then add it as a file node and use it as input to generate the clean single-view references; never save the sheet itself as a reference.
 4. Add asset nodes with `addAssetNodes` and connect each to the `asset` handle of every image or video node that shows it. Set each shot node's `shot` (`framing`: closeup, medium or wide; `angle`: front, side or back): the server picks each asset's best references for that shot and shares the model's reference limit between the assets in it, so a profile close-up gets the profile face and a wide shot gets the full outfit. Use one asset node per look and state; when the state changes (Lena's palm gets bandaged), add a second node of the same look with that `state` for the later shots.
 5. Changing an asset's name, kind, identity, or a look's description or references advances its version; results made from the older version are marked outdated on the canvas. Tell the user which shots that affects before regenerating them.
 
