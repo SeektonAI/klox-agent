@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.4.1. The latest version is always at https://klox.ai/agent/skill.md.
+Skill version 1.4.2. The latest version is always at https://klox.ai/agent/skill.md.
 
 ## Before you start
 
@@ -24,21 +24,31 @@ Skill version 1.4.1. The latest version is always at https://klox.ai/agent/skill
 3. **Lay out the structure** with `apply_workflow_change`. A typical short film:
    - one script text node (`kind: text`, finished prose in `content`);
    - one text node per shot describing it, or a single storyboard node for a very short piece;
-   - one image node per shot for the keyframe, its prompt connected from the shot text (`targetHandle: prompt`), and an asset node connected (`targetHandle: asset`) for each recurring character, location or prop in the shot;
+   - one image node per shot for the keyframe, its prompt connected from the shot text (`targetHandle: prompt`), and an asset node connected (`targetHandle: asset`) for each recurring character, location or object in the shot;
    - one video node per shot, animated from that keyframe (`targetHandle: firstFrame`) with a prompt describing the motion and camera;
    - one `compose` node, with the video nodes connected in playback order (`targetHandle: video`).
 
    Keep it proportionate: roughly one shot per 3-5 seconds of film. Call `get_capabilities` for node modes, each model's options and allowed durations, and the valid connections. Build in a few coherent changes rather than one node at a time.
 
-4. **Write prompts you would accept as a finished brief for a single frame.** Name the subject, the action, the setting, the camera (shot size, angle, movement), lighting and style. Describe recurring characters, locations and props once, as assets (below), and keep shot prompts about the shot: action, framing, expression, light. Without assets, repeat the same concrete descriptions in every shot instead of writing "the same person". Avoid asking for readable text inside images unless it matters; image and video models often garble it.
+4. **Write prompts you would accept as a finished brief for a single frame.** Name the subject, the action, the setting, the camera (shot size, angle, movement), lighting and style. Describe recurring characters, locations and objects once, as assets (below), and keep shot prompts about the shot: action, framing, expression, light. Without assets, repeat the same concrete descriptions in every shot instead of writing "the same person". Avoid asking for readable text inside images unless it matters; image and video models often garble it.
 5. **Agree on a budget before spending credits.** Show the plan: which nodes you will generate, and a credit ceiling for it. Generation spends the user's credits; only generate what the user asked for.
 6. **Generate with `run_nodes`** for anything beyond a single node: pass the nodes you want (for example all keyframes, or the compose node for the whole film) and the agreed `maxCredits`. The server runs them in dependency order, also generating upstream nodes that have no result yet, never spends more than `maxCredits`, and keeps going if your session ends. Poll `get_generation_batch`, waiting at least `retryAfterMs`; it reports each node's status and `spentCredits`. A batch that stopped with `stopCode: credit_limit` spent what it could; tell the user and ask before starting another. `stop_generation_batch` stops new nodes from starting. Use `run_node` (and `get_task`) for a single node.
 7. **Review before moving on.** Look at each keyframe (the output `url` is public) and fix weak ones before animating them; a bad keyframe makes a bad clip. A sensible rhythm for a whole film is two batches: keyframes first, review, then the clips and compose. Tell the user what you are keeping and what you are redoing.
 8. **Compose** runs once every clip has a result. Composing costs no credits. Give the user the `previewUrl` to watch the film.
 
-## Recurring characters, locations and props
+## Storyboard grids
 
-Anything that must look the same in more than one shot is an asset of the project the workflow belongs to: a character, a location or a prop. Keep three things apart:
+Before generating one keyframe per shot, you can settle composition and rhythm with storyboard grids: one image node per batch of shots, each panel one shot, in edit order. When the grids pass, write the keyframe prompts to match and connect each grid as a layout reference. With GPT Image models (`gpt-image-*`):
+
+- **Write story beats, not shot lists.** For each panel, say what happens in this moment, why, and what the characters feel, then the shot size and camera. A list of framings alone gives flat, disconnected frames.
+- **Open every grid prompt with one shared block**: a short summary of the story, the cast and locations described once, and the style. Refer to characters by name in the panels. Connect the same asset nodes to every grid.
+- **Fix the layout in words**: the number of panels, rows and columns, reading order, thin black borders and white gutters. Keep six to eight panels per image and split longer sequences into several grids. Pick the image ratio from the panel grid (3 columns × 2 rows of vertical 9:16 panels fits 3:4); avoid 16:9 for multi-row grids, which squeezes panels into strips.
+- **Put shot labels and dialogue on the sheet**: a caption strip under each panel, with the exact text in quotes and "rendered verbatim exactly as written, no extra characters". Allow no other text. This applies to storyboards only; keyframes and video stay free of text.
+- **Fix a single panel by editing the sheet**: connect the grid to a new image node and ask it to redraw only panel N with the correction and keep every other panel unchanged, instead of regenerating the whole grid.
+
+## Recurring characters, locations and objects
+
+Anything that must look the same in more than one shot is an asset of the project the workflow belongs to: a character, a location or another object (kind `other`: a product, a prop, a vehicle). In an ad, the product is an asset of kind `other`. Keep three things apart:
 
 - **Identity** — what never changes: age, face, eyes, build. Shared by every look.
 - **Look** — what one act or scene changes: outfit, hair, makeup, accessories (a location by day and by night).
@@ -46,7 +56,7 @@ Anything that must look the same in more than one shot is an asset of the projec
 
 1. Read `get_assets`. If the canvas sits in the wrong project (the user made it on its own but it is part of a larger piece), ask them, then `move_workflow_to_project`.
 2. Create each asset with `save_asset`: `kind`, `name`, an `identity.description` and a first look with its own `description`.
-3. Make the references as their own image nodes on a plain background, neutral light. For each look of a character, make one turnaround sheet: the full figure in that look in six views side by side in one image, left to right: front, front-left 45°, front-right 45°, left profile 90°, right profile 90°, back. Name asymmetric features with their side (a scar through the left eyebrow) so they stay on that side in every view. Save it with view `turnaround`. For a main character, also make a face close-up for the identity (`face`) to carry close-ups. A location or prop needs one clean image per look. Generate them, review them with the user, then save the chosen outputs' `fileKey` with a `view` tag: identity views under `identity.references`, look views under the look's `references`. Never use a story shot as a reference: a flaw in it then repeats in every shot. If the user brings a character sheet showing a look from several angles, save it as that look's `turnaround` reference as it is; labels and callouts on it are fine.
+3. Make the references as their own image nodes on a plain background, neutral light. For each look of a character, make one turnaround sheet: the full figure in that look in six views side by side in one image, left to right: front, front-left 45°, front-right 45°, left profile 90°, right profile 90°, back. Name asymmetric features with their side (a scar through the left eyebrow) so they stay on that side in every view. Save it with view `turnaround`. For a main character, also make a face close-up for the identity (`face`) to carry close-ups. A location or object needs one clean image per look; for a product, make it show the packaging, logo and printed text clearly. Generate them, review them with the user, then save the chosen outputs' `fileKey` with a `view` tag: identity views under `identity.references`, look views under the look's `references`. Never use a story shot as a reference: a flaw in it then repeats in every shot. If the user brings a character sheet showing a look from several angles, save it as that look's `turnaround` reference as it is; labels and callouts on it are fine.
 4. Add asset nodes with `addAssetNodes` and connect each to the `asset` handle of every image or video node that shows it. Set each shot node's `shot` (`framing`: closeup, medium or wide; `angle`: front, side or back): the server picks each asset's best references for that shot and shares the model's reference limit between the assets in it, so a close-up leads with the face and every other shot with the turnaround sheet. For a video clip that cuts or turns between angles, leave `shot` out (or set it to `null`). Use one asset node per look and state; when the state changes (Lena's palm gets bandaged), add a second node of the same look with that `state` for the later shots.
 5. Changing an asset's name, kind, identity, or a look's description or references advances its version; results made from the older version are marked outdated on the canvas. Tell the user which shots that affects before regenerating them.
 
