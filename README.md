@@ -2,10 +2,10 @@
 
 Let your AI coding agent build and edit AI videos on [Klox](https://klox.ai) canvases. Klox is a visual canvas for AI video creation: an agent lays out the script, storyboard and shots as a node graph, and you keep editing the same canvas in the browser.
 
-This repository contains the Klox **MCP server** connection and the Klox **agent skill**, packaged as a plugin for Claude Code and Codex.
+This repository contains the Klox **MCP server** connection and the Klox **agent skills**, packaged as a plugin for Claude Code and Codex.
 
 - MCP server: `https://klox.ai/mcp` (remote, Streamable HTTP, OAuth 2.0 sign-in)
-- Skill: [`plugins/klox/skills/canvas/SKILL.md`](plugins/klox/skills/canvas/SKILL.md), also served at https://klox.ai/agent/skill.md
+- Skills: [`canvas`](plugins/klox/skills/canvas/SKILL.md) for working on Klox canvases, and [`drama`](plugins/klox/skills/drama/SKILL.md) for producing episodic dramas; both also served at https://klox.ai/agent/skills.md
 - Setup guide: https://klox.ai/agent
 
 The easiest way to connect any agent is to send it this link and ask it to set Klox up:
@@ -77,16 +77,16 @@ To update the Codex plugin, run `codex plugin marketplace upgrade klox`, then `c
 
 ## Manual setup and other agents
 
-For clients without plugin support, follow https://klox.ai/agent to add MCP and download the skill separately. Plugins use the production Klox endpoint; use manual setup for another deployment.
+For clients without plugin support, follow https://klox.ai/agent to add MCP and download the skills separately. Plugins use the production Klox endpoint; use manual setup for another deployment.
 
 - MCP server: `https://klox.ai/mcp` (remote, Streamable HTTP, OAuth).
-- Skill: https://klox.ai/agent/skill.md
+- Skills: https://klox.ai/agent/skills.md
 
 ## About this repository
 
 This repository is published automatically from the Klox main repository. Changes made here are overwritten on the next release; please open an issue instead of a pull request.
 
-Both clients share `plugins/klox/.mcp.json` and `plugins/klox/skills/canvas/SKILL.md`. When releasing changes to bundled plugin content, bump the version and keep the two plugin manifest versions and the skill version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
+Both clients share `plugins/klox/.mcp.json` and `plugins/klox/skills/`. When releasing changes to bundled plugin content, bump the version and keep the two plugin manifest versions and every skill's version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
 
 ## Support
 
