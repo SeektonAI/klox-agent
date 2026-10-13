@@ -2,10 +2,10 @@
 
 ## Stage 2 · Visual bible
 
-Assets follow the canvas skill: identity on the asset, outfits as looks, temporary states on asset nodes, one turnaround per look and a face close-up for main characters, voice clips for speaking characters. On top of that:
+Use the asset-design skill for design exploration, accepted anchors, required views and reference review; use the canvas skill for asset storage and tool calls. Identity belongs on the asset, outfits on looks and temporary states on asset nodes. Main characters need references suited to the planned framing, including face close-ups for dialogue; turnarounds are added when the required angles justify them. Use accepted voice clips for speaking characters where supported. On top of that:
 
-- **Continuity locks.** For each look, write the few visible facts that must never drift as a short phrase you will paste verbatim into every keyframe and clip prompt that shows it ("teal scrubs under a grey knit cardigan, loose low chestnut ponytail"). Keep the list short: only what the viewer would notice changing.
-- **Tone frames.** For every location in every lighting state the episode uses, generate one empty wide shot (`TONE · Clinic · Night`) and get it approved. Every keyframe in that location and light connects it as an image input, and its prompt says that image sets colour, light and texture only, not framing.
+- **Continuity locks.** For each look, write the few visible facts that must never drift as a short phrase you will paste verbatim into every keyframe and clip prompt that shows it ("navy jacket, cream shirt, short straight hair"). Keep the list short: only what the viewer would notice changing.
+- **Tone frames.** For every location in every lighting state the episode uses, generate one empty wide shot (`TONE · <location> · <lighting state>`) and get it approved. Every keyframe in that location and light connects it as an image input, and its prompt says that image sets colour, light and texture only, not framing.
 - Never use a story frame as an asset reference.
 
 ## Stage 3a · Scene plan (`EP01 · Scene Plan`)
@@ -45,15 +45,15 @@ Every shot names the scene and beats it carries (`EP01-SC02 beats 3–5`, or `EP
 ### Each shot
 
 ```
-## EP01 S07 · The drop
+## EP01 S07 · The handoff
 Carries: EP01-SC02 beats 6–7 · cut length 3 s
-Job: show that her blood touches the wound (it creates the bond)
-Size / angle: insert, top-down on the wound
-Camera: static; the viewer needs to see one drop land
-Start → action → end: her cut palm hovers over the wound → one drop falls into the fur → a faint silver shimmer spreads and fades
-Sound: rain, her breathing; no dialogue
-Shows: Lena (hand only), Kael · Wolf form
-Keyframe prompt: …
+Job: show that Character B now has the key
+Size / angle: insert on both hands and the key
+Camera: static; the viewer needs to see who takes possession
+Start → action → end: Character A holds the key above Character B's open right palm → Character A places and releases it into that palm → Character B closes the right hand around the key
+Sound: room tone, the key touching the palm; no dialogue
+Shows: Character A and Character B (hands only), key
+Keyframe prompt: Close insert of Character A holding one key above Character B's open right palm, before contact. Both hands and the key are fully visible against the office background, neutral indoor light. No captions or extra keys.
 ```
 
 - **Job**: one reason this shot exists. If two neighbouring shots have the same job, merge them.
@@ -76,7 +76,7 @@ Keyframe prompt: …
 A keyframe is the **first frame** of the shot, frozen.
 
 - Describe only what is visible at that instant: who is where, facing which way, what they hold, their expression, framing, light. Anything that happens later in the shot stays out.
-- Name characters with asset mentions (`@[Lena Hart](asset:<id>)`); appearance comes from the references, so describe pose, position and state, not faces or outfits, apart from the continuity lock of every look in the frame, pasted verbatim.
+- Name characters with asset mentions (`@[Character A](asset:<id>)`); appearance comes from the references, so describe pose, position and state, not faces or outfits, apart from the continuity lock of every look in the frame, pasted verbatim.
 - Use one style sentence for the whole episode and one light sentence per scene, identical in every keyframe.
 - For close shots, state the crop precisely (cut at the collarbone, face in the upper third). A location reference tends to widen the frame; if close keyframes keep coming out wide, drop the location asset for that shot and describe the background in words.
 - In-world text (a phone screen, a sign) only where the story needs it, short and written exactly; check it on the keyframe. Overlay text (captions, titles, chat bubbles) never goes into a keyframe; it is added in the edit.

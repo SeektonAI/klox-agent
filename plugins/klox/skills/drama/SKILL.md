@@ -5,15 +5,15 @@ description: Make episodic short dramas (vertical microdramas, web series, AI co
 
 # Klox Drama
 
-This skill is the production method for episodic drama. The Klox canvas skill covers how to operate Klox (tools, assets, budgets, uploads); follow it for every tool call. This skill says what to make at each stage, in what order, how to hand it to the next stage, and how to review it.
+This skill is the production method for episodic drama. The Klox canvas skill covers how to operate Klox (tools, assets, budgets, uploads); follow it for every tool call. The Klox asset-design skill covers reusable visual design and reference acceptance at the visual-bible stage. This skill says what to make at each stage, in what order, how to hand it to the next stage, and how to review it.
 
-Skill version 1.4.7. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.8. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
 1. **Story before pixels.** Do not try to fix a story problem with prompts, models or retakes. Find the stage that owns the problem and fix it there.
 2. **Downstream never silently changes what upstream confirmed.** The screenplay owns what happens and who says what. The scene plan and storyboard own how it is seen and heard. Prompts translate shots. Each stage makes its own decisions freely; a stage that needs to change a confirmed upstream fact (a line, an event, a state) sends the change back to its owner, then flows it down.
-3. **One main dramatic job per shot.** Every shot has one reason to exist and a clear start and end state. The action inside it can be a short chain (she sets down the scalpel and offers her hand) with the reactions it needs; split the shot when it starts doing a second job.
+3. **One main dramatic job per shot.** Every shot has one reason to exist and a clear start and end state. The action inside it can be a short chain (a character sets down a cup and offers a hand) with the reactions it needs; split the shot when it starts doing a second job.
 4. **Keyframe before clip.** Every shot gets its own accepted start keyframe before any video is generated for it; a shot that continues a take uses the previous clip's last frame instead, reviewed like a keyframe. Never connect a storyboard grid to a video node.
 5. **Cheap checks before expensive ones.** Read through the screenplay and cut an animatic from keyframes with timed dialogue cards before spending credits on video. The animatic checks visual flow and planned timing; generated dialogue is checked on the clips.
 6. **Keep plot-critical action common.** Video models perform well what they have seen millions of times: walk in, sit down, hand over, turn, grab, embrace. Put fragile details (which hand, finger positions, small objects interacting, micro-expressions) in a dedicated insert, or rewrite the scene so the story does not depend on them.
@@ -37,7 +37,7 @@ Numbers in the rhythm profile are defaults until the user accepts them for the p
 | --- | ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | 0   | Series development        | Series canvas: `Brief`, `Series Arc`, `Payoff Map`, `Episode Map` | User approves cuts, merges, payoff placement and the rhythm profile |
 | 1   | Episode screenplay        | `EP01 · Script`                                                   | Timing estimated; stage review done; user approves the text         |
-| 2   | Visual bible              | Assets with references and voices; tone frames                    | User approved main characters' turnarounds and faces                |
+| 2   | Visual bible              | Assets with references and voices; tone frames                    | Main characters' required references accepted using asset-design    |
 | 3   | Scene plan and storyboard | `EP01 · Scene Plan` for key scenes, `EP01 · Shot List`            | Handoff checks pass; stage review done                              |
 | 4   | Keyframes and animatic    | One keyframe per shot; `EP01 · Animatic`                          | Keyframes reviewed; user watched the animatic and approved the flow |
 | 5   | Clip prompts              | One video node per shot (or per short multi-cut segment)          | Handoff checks pass                                                 |
@@ -80,7 +80,7 @@ Use one Klox project per series. Inside it:
 
 - **Series canvas** (create it first, titled `<Series> · Series Bible`) holds the long-lived text nodes: `Brief`, `Series Arc`, `Payoff Map`, `Episode Map`, and later `Voice Bible` if needed. Reference sheets for assets are made here too.
 - **One canvas per episode**, created with the series `projectId`, titled `EP01 · <episode title>`. It holds `EP01 · Script`, `EP01 · Scene Plan`, `EP01 · Shot List`, the keyframes, clips, the cut list and the compose node. Group each scene's nodes in a `frame` titled with its scene ID.
-- Name nodes by stable IDs so every stage can point at the others: scenes `EP01-SC02`, shots `EP01 S07`, keyframes `EP01 S07 · KF`, clips `EP01 S07 · Clip`, tone frames `TONE · Clinic · Night`.
+- Name nodes by stable IDs so every stage can point at the others: scenes `EP01-SC02`, shots `EP01 S07`, keyframes `EP01 S07 · KF`, clips `EP01 S07 · Clip`, tone frames `TONE · <location> · <lighting state>`.
 - Characters, locations and recurring objects are project assets, shared by every episode canvas (see the canvas skill). One asset node per look and state.
 
 ## The Brief carries the contract

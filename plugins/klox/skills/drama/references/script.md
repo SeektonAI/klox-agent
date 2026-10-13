@@ -11,18 +11,18 @@ The episode's row in `Episode Map`, the payoffs it claims in `Payoff Map`, the p
 ## Format
 
 ```
-# EP01 · The Wolf at the Door
-Target: 75 s · Payoff: P01 · Exits on: "You're my mate."
+# EP01 · The Missing Key
+Target: 75 s · Payoff: P01 · Exits on: "Then who locked it?"
 
-## EP01-SC01 · INT. HART ANIMAL CLINIC – NIGHT · rain
-[ACTION] The door bursts open. A huge black wolf staggers in and collapses.
-LENA (backing away, scalpel up): Easy. Easy.
-[ACTION] The wolf lifts its head and looks straight at her.
-[SFX] Thunder.
+## EP01-SC01 · INT. OFFICE – NIGHT
+[ACTION] Character A pulls the locked drawer; it does not open.
+CHARACTER A (turning to Character B): You said you had the key.
+[ACTION] Character B opens an empty palm.
+[SFX] A key rattles behind the closed door.
 ```
 
 - One line per beat. A beat is either an action (`[ACTION]`, one visible thing happening) or one line of dialogue (`NAME (delivery): line`).
-- Other tags: `[VO]` narration or inner voice, `[OS]` spoken off screen, `[SFX]` a sound that matters, `[TEXT]` in-world text the story needs, with its surface (`[TEXT] phone screen: "Payment overdue"`), `[TITLE]` overlay text added in the edit (`[TITLE] 8 HOURS EARLIER`), `[CONT]` a state downstream must keep (her left palm is bandaged from here).
+- Other tags: `[VO]` narration or inner voice, `[OS]` spoken off screen, `[SFX]` a sound that matters, `[TEXT]` in-world text the story needs, with its surface (`[TEXT] phone screen: "Payment overdue"`), `[TITLE]` overlay text added in the edit (`[TITLE] 8 HOURS EARLIER`), `[CONT]` a state downstream must keep (Character B holds the key in the right hand from here).
 - No quoted dialogue inside action lines. Subtext goes into the delivery note, not into the line.
 
 ## Timing

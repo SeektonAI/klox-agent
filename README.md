@@ -5,7 +5,7 @@ Let your AI coding agent build and edit AI videos on [Klox](https://klox.ai) can
 This repository contains the Klox **MCP server** connection and the Klox **agent skills**, packaged as a plugin for Claude Code and Codex.
 
 - MCP server: `https://klox.ai/mcp` (remote, Streamable HTTP, OAuth 2.0 sign-in)
-- Skills: [`canvas`](plugins/klox/skills/canvas/SKILL.md) for working on Klox canvases, and [`drama`](plugins/klox/skills/drama/SKILL.md) for producing episodic dramas; both also served at https://klox.ai/agent/skills.md
+- Skills: [`canvas`](plugins/klox/skills/canvas/SKILL.md) for working on Klox canvases, [`asset-design`](plugins/klox/skills/asset-design/SKILL.md) for reusable visual assets, and [`drama`](plugins/klox/skills/drama/SKILL.md) for producing episodic dramas; all also served at https://klox.ai/agent/skills.md
 - Setup guide: https://klox.ai/agent
 
 The easiest way to connect any agent is to send it this link and ask it to set Klox up:
