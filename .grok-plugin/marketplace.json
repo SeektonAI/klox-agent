@@ -1,0 +1,19 @@
+{
+  "name": "klox",
+  "description": "Klox plugins for Grok",
+  "owner": {
+    "name": "Klox",
+    "email": "support@klox.ai"
+  },
+  "plugins": [
+    {
+      "name": "klox",
+      "description": "Build and edit AI videos on Klox canvases: MCP connection plus the Klox working method",
+      "source": {
+        "type": "local",
+        "path": "./plugins/klox"
+      },
+      "category": "productivity"
+    }
+  ]
+}

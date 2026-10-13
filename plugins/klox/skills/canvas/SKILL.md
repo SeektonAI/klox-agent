@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.4.8. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
+Skill version 1.4.9. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
 
 ## Before you start
 
@@ -37,6 +37,21 @@ For an episodic drama (a series, a pilot, a microdrama, a story adapted into epi
 6. **Generate with `run_nodes`** for anything beyond a single node: pass the nodes you want (for example all keyframes; or, once every keyframe is accepted, the compose node for the whole film) and the agreed `maxCredits`. The server runs them in dependency order, also generating upstream nodes that have no result yet (so never pass a clip or compose node while its keyframes are unreviewed), never spends more than `maxCredits`, and keeps going if your session ends. Poll `get_generation_batch`, waiting at least `retryAfterMs`; it reports each node's status and `spentCredits`. A batch that stopped with `stopCode: credit_limit` spent what it could; tell the user and ask before starting another. `stop_generation_batch` stops new nodes from starting. Use `run_node` (and `get_task`) for a single node.
 7. **Review before moving on.** Look at each keyframe (the output `url` is public) and fix weak ones before animating them; a bad keyframe makes a bad clip. A sensible rhythm for a whole film is two batches: keyframes first, review, then the clips and compose. Tell the user what you are keeping and what you are redoing.
 8. **Compose** runs once every clip has a result. Composing costs no credits. Give the user the `previewUrl` to watch the film.
+
+## Asset references and task prompts
+
+Klox tells the model who each connected asset is and what each of its images is for: a character's identity (face and build) or current look (outfit, hair, makeup), as a face close-up, a turnaround or a single view; a location; an object. It also tells the model that character and object references never set pose, position, expression, framing or background, while a location reference sets the place and its layout. Each asset node's `state` follows your prompt and overrides the references; on a video it describes the first frame only. Everything else about the shot is your prompt's job.
+
+Before running any image or video node, check each item:
+
+1. **One moment per image.** An image node shows a single moment: a START keyframe its shot's start, an END frame (a separate node, made from the accepted START) its end. Its prompt and its asset-node states describe that moment only. Changes between moments go in the video prompt. On a storyboard grid, check each panel as its own image.
+2. **Each fact in one place.** A visible condition that holds through several shots (wet hair, a bandaged palm, blood on a sleeve, a changed eye colour) goes in the asset node's `state`, and that state matches the moment the node shows (for a video, its first frame); when it does not, connect another asset node. A condition only this shot shows goes in the prompt. Never write a fact in both.
+3. **What differs from the references.** Name in the prompt what this shot changes from the references: pose, expression, an open coat, a different time of day at the location.
+4. **What each direct input is for.** For every image connected directly (layout, tone frame, storyboard grid), say what it sets and what it does not: "@[Tone](image:1) sets colour and light only, not framing".
+5. **Crop fits the action.** Frame the action the shot is about; an insert of hands or an object frames them, not a face.
+6. **Every subject is connected.** Each recurring subject in frame has its asset node connected, or is already in the keyframe on a `firstFrame` route.
+
+Write only the results of these checks into prompts, not the checks themselves. Review each output against them too: the model can still ignore a correct prompt.
 
 ## Storyboard grids
 

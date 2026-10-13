@@ -1,0 +1,17 @@
+{
+  "name": "klox",
+  "owner": {
+    "name": "Klox",
+    "email": "support@klox.ai"
+  },
+  "metadata": {
+    "description": "Klox plugins for Cursor"
+  },
+  "plugins": [
+    {
+      "name": "klox",
+      "source": "./plugins/klox",
+      "description": "Build and edit AI videos on Klox canvases: MCP connection plus the Klox working method"
+    }
+  ]
+}

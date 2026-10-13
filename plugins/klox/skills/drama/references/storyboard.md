@@ -75,6 +75,8 @@ Keyframe prompt: Close insert of Character A holding one key above Character B's
 
 A keyframe is the **first frame** of the shot, frozen.
 
+Run the canvas skill's pre-generation checks on every shot. Give each shot separate **Start state** and **End state** fields; its keyframe prompt and asset nodes take only the start state. Write a visible condition (an injury, a dressing, a stain, a held object) on every shot that shows it, not only in the scene header. A matched END frame is its own image node, made from the inspected START frame.
+
 - Describe only what is visible at that instant: who is where, facing which way, what they hold, their expression, framing, light. Anything that happens later in the shot stays out.
 - Name characters with asset mentions (`@[Character A](asset:<id>)`); appearance comes from the references, so describe pose, position and state, not faces or outfits, apart from the continuity lock of every look in the frame, pasted verbatim.
 - Use one style sentence for the whole episode and one light sentence per scene, identical in every keyframe.

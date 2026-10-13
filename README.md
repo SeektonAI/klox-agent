@@ -2,7 +2,7 @@
 
 Let your AI coding agent build and edit AI videos on [Klox](https://klox.ai) canvases. Klox is a visual canvas for AI video creation: an agent lays out the script, storyboard and shots as a node graph, and you keep editing the same canvas in the browser.
 
-This repository contains the Klox **MCP server** connection and the Klox **agent skills**, packaged as a plugin for Claude Code and Codex.
+This repository contains the Klox **MCP server** connection and the Klox **agent skills**, packaged as a plugin for Claude Code, Codex, Cursor and Grok.
 
 - MCP server: `https://klox.ai/mcp` (remote, Streamable HTTP, OAuth 2.0 sign-in)
 - Skills: [`canvas`](plugins/klox/skills/canvas/SKILL.md) for working on Klox canvases, [`asset-design`](plugins/klox/skills/asset-design/SKILL.md) for reusable visual assets, and [`drama`](plugins/klox/skills/drama/SKILL.md) for producing episodic dramas; all also served at https://klox.ai/agent/skills.md
@@ -75,6 +75,29 @@ The login command starts OAuth in your browser. Sign in to Klox and approve acce
 
 To update the Codex plugin, run `codex plugin marketplace upgrade klox`, then `codex plugin add klox@klox` to install the new version, and start a new chat. Do not also install the standalone MCP entry or download a second skill. Existing manual installations can keep using that method; when migrating, remove the old entry and skill after the plugin works, preserving any customizations.
 
+## Cursor
+
+The same plugin is a Cursor marketplace. Install **Klox** from Customize when it is listed; that brings the MCP server and the skills.
+
+Until it is listed, open this link to install the MCP server, then download the skills from https://klox.ai/agent/skills.md into `~/.cursor/skills/`:
+
+```text
+cursor://anysphere.cursor-deeplink/mcp/install?name=klox&config=eyJ1cmwiOiJodHRwczovL2tsb3guYWkvbWNwIn0%3D
+```
+
+Enable the `klox` server in Customize and choose Connect. Sign in to Klox and approve access, then start a new Agent chat. A team can also import this repository as a team marketplace.
+
+## Grok
+
+```bash
+grok plugin marketplace add SeektonAI/klox-agent
+grok plugin install klox --trust
+```
+
+Start a new session so the plugin loads. The first Klox tool call then starts OAuth in your browser. Sign in, approve access, and call `list_workflows`.
+
+To update, run `grok plugin update klox` and start a new session. Do not also install the standalone MCP entry or download a second skill.
+
 ## Manual setup and other agents
 
 For clients without plugin support, follow https://klox.ai/agent to add MCP and download the skills separately. Plugins use the production Klox endpoint; use manual setup for another deployment.
@@ -86,7 +109,7 @@ For clients without plugin support, follow https://klox.ai/agent to add MCP and 
 
 This repository is published automatically from the Klox main repository. Changes made here are overwritten on the next release; please open an issue instead of a pull request.
 
-Both clients share `plugins/klox/.mcp.json` and `plugins/klox/skills/`. When releasing changes to bundled plugin content, bump the version and keep the two plugin manifest versions and every skill's version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
+Claude Code, Codex, Cursor and Grok share `plugins/klox/.mcp.json` and `plugins/klox/skills/`. Each client has its own marketplace index. When releasing changes to bundled plugin content, bump the version and keep the Claude Code, Codex and Cursor plugin manifest versions and every skill's version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
 
 ## Support
 

@@ -28,6 +28,8 @@ Choose the route first; each route carries the shot's consistency facts in a dif
 
 Stay within the model's limits: duration range, reference counts, prompt length.
 
+Run the canvas skill's pre-generation checks on every clip. Start the action from the accepted keyframe's exact state, and write the end state as something the action reaches. Name the speaker of every line.
+
 ## Audio production
 
 Use a video model that generates picture and audio together. Check `get_capabilities` for audio generation and reference-audio support before setting up the clip. Enable audio when configurable; if the chosen model cannot generate audio, choose a compatible video model before production. For clips with dialogue, prefer a model that also takes reference audio; without it, each character's voice can drift between clips, so review voice consistency shot by shot.
