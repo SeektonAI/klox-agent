@@ -1,12 +1,14 @@
 # Locations and spatial references
 
-Design a reusable space around its story or practical function: entrances and exits, where characters can stand, relevant surfaces, sightlines and identifiable landmarks. Do not invent precise floor dimensions when approximate relationships are enough.
+Design a reusable space around its story or practical function: entrances and exits, where characters can stand, relevant surfaces, sightlines and identifiable landmarks. Approximate relationships can guide early design; a previs scene needs explicit working dimensions for landmarks that affect blocking. Record approved or provisional measurements in the existing description, not invented asset fields.
 
 ## Establish geography before decorative variants
 
 Create an empty anchor wide view showing the main action area and a few fixed spatial anchors. Record their relationships in the location's identity description (door left of reception desk, treatment table behind the desk, window on the opposite wall). Choose camera height and perspective that make these relationships readable; avoid an extreme wide lens that creates unusable scale.
 
 If reverse angles are needed, derive them from that geography. A new angle must show the same room rather than rearranging doors and furniture to make a pretty composition. A simple top-down layout can support complex blocking, but it is an explanatory board, not automatically a photo reference.
+
+When a shared previs exists, use its approved spatial relationships when generating new location views. Check the actual images: shared 3D layout does not ensure a model kept the door, window or table in the correct place. Resolve a mismatch in the owning asset/layout rather than maintaining two conflicting room designs.
 
 ## Maintenance and wear
 

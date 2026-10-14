@@ -8,6 +8,8 @@ Define silhouette, main dimensions or relative scale, material, distinguishing f
 
 For a product, preserve the supplied packaging and exact required logo/text. Do not redesign brand facts without authorization. An attractive generated label is insufficient: inspect required text and repair it before using the image as a reference.
 
+For previs-backed interactions, pass approved dimensions and functional contact features in the description. A prop Actor is a geometric stand-in, not automatically a rigged or attachable copy of the asset; check the currently supported scene capabilities. Reference design acceptance does not prove that the video model executes the contact.
+
 ## States and interaction
 
 Add only functional views needed by the action: open/closed, front/back, screen active, latch released, or a required interior. For reusable configurations use looks; a one-shot scratch, wet surface or temporary contents can be shot state. A hand holding the object is shot staging, not a new object identity.

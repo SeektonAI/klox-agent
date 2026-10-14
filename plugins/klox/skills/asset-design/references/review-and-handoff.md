@@ -14,6 +14,8 @@ Inspect the actual image and compare it to the accepted anchor and current asset
 
 Report a defect with node/view, visible evidence, the intended use it breaks and the smallest correction. Keep taste choices separate: a preference for a different palette is not a continuity error. Repair only affected views; do not redesign the accepted character to accommodate a bad child image.
 
+For a state image containing a prop or another project asset, compare that object's shape, scale and visible details to its accepted reference as well as checking state placement and contact. A correct wound side does not establish that the arrowhead matches the prop used in later shots. Record what was checked and any unverified details; do not give the whole image a blanket reviewed status while a required check remains open.
+
 When inspection is unavailable, say which checks are unverified and do not save the candidate as an accepted reference. User-supplied accepted designs need no new exploration, but their suitability for a new input route still needs checking.
 
 ## Storage and input planning
@@ -28,7 +30,7 @@ Use the canvas skill's `save_asset` and upload operations, with current tool sch
 
 Keep the reference set small enough for the target model and all subjects in a shot. Klox sends turnaround references first, then face references, then other images within its limits; adding every possible view can crowd out another subject or an important input. Put useful `other` references in intentional order, inspect model capacity with `get_capabilities`, and resolve competing inputs before generation. The asset node does not offer arbitrary per-shot selection of reference views; do not promise a choice that the current tools cannot express.
 
-For a first-frame video route, the accepted keyframe carries appearance. For a reference route, plan which asset inputs and voice references are supported. Asset descriptions alone are not a substitute for the images actually delivered to the model.
+For a first-frame video route, the accepted keyframe carries appearance. For a reference route, plan which asset inputs and voice references are supported. For a previs route, also hand over the approved dimensions and compare the opening picture against the corresponding scene moment. `opening` on a reference image requests the start; it does not make that image a strict first-frame input. Asset descriptions alone are not a substitute for the images actually delivered to the model.
 
 ## Acceptance note
 
