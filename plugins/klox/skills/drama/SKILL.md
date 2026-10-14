@@ -7,7 +7,7 @@ description: Make episodic short dramas (vertical microdramas, web series, AI co
 
 This skill is the production method for episodic drama. The Klox canvas skill covers how to operate Klox (tools, assets, budgets, uploads); follow it for every tool call. The Klox asset-design skill covers reusable visual design and reference acceptance at the visual-bible stage. This skill says what to make at each stage, in what order, how to hand it to the next stage, and how to review it.
 
-Skill version 1.4.9. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.10. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 

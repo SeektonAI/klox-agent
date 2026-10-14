@@ -18,7 +18,7 @@ Define identity through layout, architecture and fixed materials. Use looks for 
 
 For different views of the same location at the same time, preserve the main light sources in world space, their colour temperature, and the motivated bright/dark relationships. Record these in the look description. Changing camera direction can move a source from screen-left to screen-right; do not move the actual window or relight the room just to preserve image-left illumination. Check reverse views for consistent source direction, shadows and lit surfaces, allowing physically plausible view-dependent differences.
 
-For each required lighting condition, make a tone frame that controls colour, light and texture. State explicitly that downstream shots take lighting from it, not framing. A geography reference and a tone reference may be the same accepted image when both uses are compatible.
+For each required lighting condition, make a tone frame that controls colour, light and texture. Downstream shots connect it to the `image` input with purpose `tone`, so it sets lighting, not framing. A geography reference and a tone reference may be the same accepted image when both uses are compatible.
 
 ## Review
 

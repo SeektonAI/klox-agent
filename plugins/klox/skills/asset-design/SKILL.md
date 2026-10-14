@@ -7,7 +7,7 @@ description: Design reusable characters, locations and props for Klox production
 
 This skill owns visual asset development. The Klox canvas skill owns tool operations, budgets, uploads and asset storage; follow it when working on Klox. The drama skill owns story facts and episode production. Preserve confirmed story facts and existing design choices; return a proposed story change to its owner rather than hiding it in a reference prompt.
 
-Skill version 1.4.9. The latest version is always at https://klox.ai/agent/skills/asset-design/SKILL.md.
+Skill version 1.4.10. The latest version is always at https://klox.ai/agent/skills/asset-design/SKILL.md.
 
 ## Start from the material that exists
 
@@ -48,6 +48,16 @@ Stop at the requested output. A written design request does not authorize image 
 - **Identity**: what makes this the same person, place or object across productions.
 - **Look**: a reusable visual variant such as costume, location light state or a prop's open configuration.
 - **Shot state**: a temporary condition such as wet hair, a fresh bandage or a held object; it goes on the asset node used by those shots.
+
+**State images.** When where a shot state sits matters (which side a wound is on, which way an arrow points, where a stain or bandage is), words are not enough: image models and reviewers both confuse left and right, and the subject's own left is worse than the frame's. Make a state image for it:
+
+1. Derive it from the accepted anchor by image editing: keep the subject and change only the state. Choose a view in which the side and direction read without labels (the injured flank facing the camera, the arrow's full length visible).
+2. Decide the facts first and show them exactly: the anatomical side, the place on the body, the size, and for anything that pierced or struck, the direction it came from and the angle it sits at.
+3. Put the key fact in one image. Add a second only for another angle or a close detail; a model with little room gets the first alone.
+4. Keep it clean. Arrows, circles and text drawn on the image may be copied into shots; use them only after a test shows they are not.
+5. Review it like a reference (see review-and-handoff.md): the side matches the screenplay's `[CONT]` line, nothing else about the subject changed. Name it `STATE · <asset> · <state>`.
+
+It never becomes an identity or look reference. It goes on the asset node as `stateReferences` (see the canvas skill), and the node's state text then says only what the condition is, never its side or direction.
 
 Use visible, comparable anchors rather than adjectives such as beautiful, luxurious or cinematic alone. Choose a few features that survive the intended framing. Write a short continuity lock in the prompt language for facts that should stay fixed during that look; leave changing facts out. Do not invent separate assets for ordinary poses or views.
 

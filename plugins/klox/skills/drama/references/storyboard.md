@@ -5,8 +5,9 @@
 Use the asset-design skill for design exploration, accepted anchors, required views and reference review; use the canvas skill for asset storage and tool calls. Identity belongs on the asset, outfits on looks and temporary states on asset nodes. Main characters need references suited to the planned framing, including face close-ups for dialogue; turnarounds are added when the required angles justify them. Use accepted voice clips for speaking characters where supported. On top of that:
 
 - **Continuity locks.** For each look, write the few visible facts that must never drift as a short phrase you will paste verbatim into every keyframe and clip prompt that shows it ("navy jacket, cream shirt, short straight hair"). Keep the list short: only what the viewer would notice changing.
-- **Tone frames.** For every location in every lighting state the episode uses, generate one empty wide shot (`TONE · <location> · <lighting state>`) and get it approved. Every keyframe in that location and light connects it as an image input, and its prompt says that image sets colour, light and texture only, not framing.
+- **Tone frames.** For every location in every lighting state the episode uses, generate one empty wide shot (`TONE · <location> · <lighting state>`) and get it approved. Every keyframe in that location and light connects it to the `image` input with purpose `tone`; Klox then tells the model it sets colour, light and texture only, so the prompt does not repeat it.
 - Never use a story frame as an asset reference.
+- **State images.** For every plot-relevant state whose side or direction the viewer could catch drifting (an injury, an arrow, a stain, a bandage, a mark), make a state image with the asset-design skill before keyframes and put it on the asset node that feeds the shots showing it.
 
 ## Stage 3a · Scene plan (`EP01 · Scene Plan`)
 
@@ -20,6 +21,8 @@ For each key scene, write a short paragraph answering:
 4. **Space and power**: entrances, distance, who occupies the space, who blocks or yields, where the exits are.
 5. **Held moment**: which reaction or silence the scene stays on, and for how long.
 6. **Sound**: the leading sound source, where silence is used, and where sound arrives before the picture or carries over a cut.
+
+Then draw the scene's **blocking plan** as a short text block at the top of the scene in `EP01 · Scene Plan` (every scene with two or more subjects, not only key ones): the fixed landmarks (door, counter, window), each subject's position and facing at the start and wherever they move, the axis of action, and the camera setups the scene uses (`A`: wide from the window side; `B`/`C`: singles on the same side of the axis). It is for you and the user, never a generation input; this workflow does not rely on the model correctly converting a floor plan into a perspective view. Every shot names its setup.
 
 If two genuinely different approaches exist (play it in one held two-shot, or fragment it into close-ups), compare them in two lines each and pick one; otherwise do not invent alternatives. Then turn the plan into the shots' jobs, sizes, camera, start and end states and sound. Check afterwards that space, camera and sound all carry the same turn, rather than a generic medium shot, reverse, push-in pattern.
 
@@ -69,13 +72,13 @@ Keyframe prompt: Close insert of Character A holding one key above Character B's
 - Cut on motion: end one shot mid-action and continue it in the next.
 - Vertical framing favours medium, close and insert. Show space through depth (foreground, middle, background), not width. At most three people in a frame; more needs a staging plan.
 - Every cut changes size, angle or relationship. Two neighbouring shots with the same size, angle and relationship are one shot.
-- Keep screen direction and eyelines consistent through a scene; write who is screen-left and who is screen-right at the top of each scene.
+- Keep screen direction and eyelines consistent through a scene. Every shot gets a **Screen map** derived from the blocking plan and its setup: who is screen-left, centre and right, which way each faces and looks, who is nearer the camera. Shot and reverse shot on the same side of the axis keep each subject on the same side of the frame; a cut that swaps them crosses the line and needs a reason and a re-establishing shot.
 
 ### Keyframe prompts
 
 A keyframe is the **first frame** of the shot, frozen.
 
-Run the canvas skill's pre-generation checks on every shot. Give each shot separate **Start state** and **End state** fields; its keyframe prompt and asset nodes take only the start state. Write a visible condition (an injury, a dressing, a stain, a held object) on every shot that shows it, not only in the scene header. A matched END frame is its own image node, made from the inspected START frame.
+Run the canvas skill's pre-generation checks on every shot. Give each shot separate **Start state** and **End state** fields; its keyframe prompt and asset nodes take only the start state. Write a visible condition (an injury, a dressing, a stain, a held object) on every shot that shows it, not only in the scene header. For a condition with a side, add to the shot's Screen map which way the subject's head points in the frame, which side of the body faces the camera, and so where the condition appears on screen, or "not visible in this shot". Derive it once from the scene's blocking; when the camera would hide a condition the story needs seen, move the camera, not the wound. Keyframe prompts describe that frame geometry (head toward frame left, the upward flank); the side itself comes from the state image, not from "anatomical left" in the text. A matched END frame is its own image node, made from the inspected START frame.
 
 - Describe only what is visible at that instant: who is where, facing which way, what they hold, their expression, framing, light. Anything that happens later in the shot stays out.
 - Name characters with asset mentions (`@[Character A](asset:<id>)`); appearance comes from the references, so describe pose, position and state, not faces or outfits, apart from the continuity lock of every look in the frame, pasted verbatim.
@@ -86,9 +89,11 @@ Run the canvas skill's pre-generation checks on every shot. Give each shot separ
 ## Stage 4 · Keyframes and animatic
 
 1. Generate the tone frames, review, approve.
-2. Generate one keyframe per shot: connect the asset nodes it shows and the scene's tone frame. Review each one against its shot: right people, right positions, right state, continuity locks visible, nothing from the end of the shot. Redo weak ones before anything else; a bad keyframe makes a bad clip.
-3. Storyboard grids (six to eight panels in one image) are optional and only for reviewing the episode's rhythm quickly. They are never references for clips.
-4. **Animatic.** Download the keyframes and lay them on the timeline at the planned shot lengths with timed dialogue cards showing speaker and exact words. Render the visual timing preview locally with ffmpeg and upload it as `EP01 · Animatic`. These cards are preview annotations, not final captions. Estimate speaking windows from the screenplay; this preview does not verify voice, lip sync or actual speaking speed. Verify those on the generated clips.
+2. **Master first, per setup.** For each camera setup, generate its widest shot first (the master) and accept it before any other shot from that setup. A setup whose blocking is hard (several subjects, someone lying down, a crossing) gets a layout guide first: a rough image of who is where (a block or stick-figure sketch, a 3D previs render from Blender, or a quick low-cost generation reviewed only for positions), connected to the master's `image` input with purpose `layout`. In a sketch, give every subject a distinct colour or a written label, and say in the shot prompt which is which ("the red figure is Lena, the blue shape is the wolf"); Klox explains what a layout guide decides, but only the prompt can say who each placeholder is. When a scene's space is complex, block it once in Blender and render every setup's layout guide from that one scene, so the setups share the same geometry by construction.
+   Accept a master by checking it against the blocking plan and every master already accepted in the scene: the same landmarks in the places this angle should show them (door, counter, window), each subject's facing, who occludes whom, and the distances between subjects. A reverse setup gets its own master, checked this way; never derive it by mirroring.
+3. Generate the other keyframes. A layout guide controls the whole frame of the shot it feeds, framing included, so it must already show this shot's framing. When a shot keeps the master's framing, connect the master as its layout guide. When the size or framing changes (a close-up from a two-shot wide), first make a guide for the new frame: crop the master, or derive the new framing from it by image editing and check that positions and facing survived. Then connect that guide with purpose `layout`. Always derive from the master itself, not from the previous derived shot: small errors compound along a chain. Connect the asset nodes it shows and the scene's tone frame (purpose `tone`). Review each one against its shot: right people, right positions, right state, continuity locks visible, nothing from the end of the shot. Redo weak ones before anything else; a bad keyframe makes a bad clip.
+4. Storyboard grids (six to eight panels in one image) are optional and only for reviewing the episode's rhythm quickly. They are never references for clips.
+5. **Animatic.** Download the keyframes and lay them on the timeline at the planned shot lengths with timed dialogue cards showing speaker and exact words. Render the visual timing preview locally with ffmpeg and upload it as `EP01 · Animatic`. These cards are preview annotations, not final captions. Estimate speaking windows from the screenplay; this preview does not verify voice, lip sync or actual speaking speed. Verify those on the generated clips.
 
 ## Stage review
 
@@ -98,8 +103,9 @@ Before showing the shot list, run the script → shot list handoff checks from t
 - After each important line or event, is the person it hits shown reacting?
 - Does each cut change size, angle, relationship or information?
 - List every departure from a default (shot length, coverage pattern) with its reason.
+- Does every shot name a setup, and does its Screen map follow from the blocking plan? List each cut that crosses the axis, with its reason.
 
-After keyframes, review each against its shot and the neighbouring shots: positions, held objects, states and screen direction carry across the cut.
+After keyframes, review each against its shot and the neighbouring shots: positions, held objects, states and screen direction carry across the cut, and each subject sits where the Screen map puts it. A keyframe whose blocking is wrong is fixed through its layout guide or master, not by adding more position words to the prompt. Check sides by derivation, not by asking whether something "is on the left": find where the head points and which surface faces the camera, work out where the condition must appear, then compare it with the Screen map and the state image, cropping in when it is small. A keyframe that is right except for a side is repaired with a targeted edit, not rerolled.
 
 ## Gate
 
