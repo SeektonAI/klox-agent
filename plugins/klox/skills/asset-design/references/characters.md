@@ -12,11 +12,11 @@ For each principal or recognisable recurring character, identify at least one cu
 
 ## Cast height and scale
 
-Record each character's approved height or approximate relationship to a named character in their identity description. Derive the cast's height order and approximate gaps from these descriptions when reviewing group shots; do not maintain a second editable height table. Resolve contradictory relationships before making references. If heights are not established, propose them as design choices rather than claiming source facts.
+Save each character's approved height as its body (`save_asset` `identity.body`: `{kind: humanoid, height}`); previs actors of the character take it when they leave `body` out. Record relationships to named characters in the identity description. Derive the cast's height order and approximate gaps from these descriptions when reviewing group shots; do not maintain a second editable height table. Resolve contradictory relationships before making references. If heights are not established, propose them as design choices rather than claiming source facts.
 
 Use at least one stable absolute scale reference for the cast when full-body or group framing needs it: an approved height measurement or a location feature whose size is established. When comparing a character to a doorway, specify upright posture, footwear, standing plane and perspective, and keep it compatible with the location's description. A head aligning with a distant doorframe in one perspective shot does not establish real height. Check pair tests with comparable depth and posture so perspective cannot disguise a mismatch.
 
-For animal assets used in previs, record approved species, shoulder height and body length in the identity description. Relative proportions are useful for design, but the production timeline needs explicit working measurements; label proposed values and resolve contradictions before use.
+For animal assets used in previs, save species, shoulder height and body length as the body (`{kind: quadruped, species, shoulderHeight, length}`). Relative proportions are useful for design, but the production timeline needs explicit working measurements; label proposed values and resolve contradictions before use.
 
 ## Anchor and reference selection
 

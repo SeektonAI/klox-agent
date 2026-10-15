@@ -8,7 +8,15 @@ Use `addNodes` kind `previs` with `timeline`; update with `updateNodes[].timelin
 
 Timeline v1 uses meters, seconds and degrees: floor coordinates x east/y north, height separate, yaw 0 north/90 east. The timeline includes duration, stage landmarks, actors, tracks and Shots. Actor types are humanoid (height and optional build), quadruped (species, shoulder height and length), and prop (box/cylinder/sphere dimensions). Associate actors with project asset IDs for correspondence; that association does not automatically feed asset reference images to a generator. Connect the appropriate asset nodes separately.
 
-Take approved sizes from asset descriptions; when only relative scale exists, establish an explicit working measurement and record it there. Do not infer physical dimensions from perspective in one image. Keep a scene's layout stable across observations.
+## Stand in a location set
+
+A place that recurs is a location asset with a set (`save_asset` `identity.set`): bounds, wall/railing/open sides, openings and fixed furniture with stable IDs. Write `stage.location` = that assetId instead of copying the room into `stage.landmarks`. Put only this scene's own objects in `stage.landmarks`. Change a set fixture for this scene only with `stage.overrides` (`{fixture, hide: true}` or `{fixture, position?, yaw?, elevation?}`); for furniture that moves during the scene, hide the fixture and add a prop actor. Never edit the set to suit one scene.
+
+Walls the camera is ever outside of during a Shot are hidden for the whole Shot. Write `shots[].hide` (`wall:north`, `wall:south`, `wall:east`, `wall:west`, `ceiling`) only to choose differently.
+
+Give an actor its character's `assetId` and leave `body` out: it takes the asset's body (`identity.body`). Write `body` only for a deliberate exception; a warning reports the difference.
+
+If the location has no set yet, save one first (asset-design locations). For a one-off place with no asset, landmarks at explicit working sizes are still allowed. Do not infer physical dimensions from perspective in one image.
 
 Currently evaluated tracks are move, motion and gaze. Use supported posture transitions and natural-duration bounds; movement and full-body motion may not overlap. A move key's yaw is allowed only at a stop and turning consumes dwell after arrival. Unsupported reach, attach, transform and camera follow are rejected: choose supported staging or another production route, never hide the interaction as a supposed solved contact.
 
@@ -18,7 +26,7 @@ Fix all reported timeline issues and resubmit the change. Do not present a rejec
 
 ## Read and review
 
-`get_workflow` returns the timeline, each Shot's image/video export status, and Screen-map samples at start, middle and last frame when available. Use the samples for frame thirds, facing, side-up and approximate height; preserve borderline cases and unavailable results rather than inventing certainty.
+`get_workflow` returns the timeline, each Shot's image/video export status, the node's diagnostics, what blocks a Shot's export (a camera inside a body, a root walking through a wall where there is no door or gap), and Screen-map samples at start, middle and last frame when available. A node that cannot be resolved (missing location, a location without a set, an actor with no body anywhere, an id clashing with the set) is marked `unresolved` and does not play or export; fix it before anything else. Use the samples for frame thirds, facing, side-up and approximate height; preserve borderline cases and unavailable results rather than inventing certainty.
 
 Inspect playback for reveals, occlusion and important events between samples. A computed map describes the stand-ins, not a guarantee that generated pictures or clips followed them. Inspect those outputs separately against the scene and assets.
 
@@ -49,4 +57,4 @@ If accessible exports are absent, review the owner's Shot playback against a wri
 
 ## Changes
 
-A relevant timeline/Shot change invalidates affected exports. Old generated images and takes are still stored and do not update automatically. Recheck the affected visual inputs, take selection and cut mappings using recorded sources and available current/outdated indicators. Renaming a Shot or node alone does not mean the picture must be regenerated.
+A relevant timeline/Shot change, or a change to the set or body it reads, invalidates affected exports; `save_asset` lists the previs nodes a set or body change touched and any problem it brought in. Old generated images and takes are still stored and do not update automatically. Recheck the affected visual inputs, take selection and cut mappings using recorded sources and available current/outdated indicators. Renaming a Shot or node alone does not mean the picture must be regenerated.

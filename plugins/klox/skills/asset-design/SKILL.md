@@ -7,7 +7,7 @@ description: Design reusable characters, locations and props for Klox production
 
 This skill owns visual asset development. The Klox canvas skill owns tool operations, budgets, uploads and asset storage; follow it when working on Klox. The drama skill owns story facts and episode production. Preserve confirmed story facts and existing design choices; return a proposed story change to its owner rather than hiding it in a reference prompt.
 
-Skill version 1.4.12. The latest version is always at https://klox.ai/agent/skills/asset-design/SKILL.md.
+Skill version 1.4.13. The latest version is always at https://klox.ai/agent/skills/asset-design/SKILL.md.
 
 ## Start from the material that exists
 
@@ -67,7 +67,7 @@ For speaking characters, record voice direction and use accepted voice reference
 
 ## Handoff to scene previs
 
-When production uses previs, hand over approved physical proportions and relevant space: human height, animal shoulder height and body length, plot-critical prop dimensions, and fixed location landmarks. Keep these in the existing identity/look descriptions, with measurements identified as confirmed or working assumptions; there are no dedicated asset dimension fields. The production task copies them into its scene timeline and checks consistency. Asset references define appearance and state, while previs defines shot pose, location and motion. A visual pair test checks generated appearance against that geometry; the greybox alone does not prove the references will hold. Do not build episode previs as an unsolicited part of a standalone asset task.
+When production uses previs, hand over approved physical proportions and space as asset data: each location's set and each acting character's body (see the locations and characters references). Keep plot-critical prop dimensions in the description, with measurements identified as confirmed or working assumptions. Scenes reference the set and bodies rather than copying them. Asset references define appearance and state, while previs defines shot pose, location and motion. A visual pair test checks generated appearance against that geometry; the greybox alone does not prove the references will hold. Do not build episode previs as an unsolicited part of a standalone asset task.
 
 ## Completion
 

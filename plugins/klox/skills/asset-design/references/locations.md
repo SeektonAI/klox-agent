@@ -1,6 +1,17 @@
 # Locations and spatial references
 
-Design a reusable space around its story or practical function: entrances and exits, where characters can stand, relevant surfaces, sightlines and identifiable landmarks. Approximate relationships can guide early design; a previs scene needs explicit working dimensions for landmarks that affect blocking. Record approved or provisional measurements in the existing description, not invented asset fields.
+Design a reusable space around its story or practical function: entrances and exits, where characters can stand, relevant surfaces, sightlines and identifiable landmarks. Keep the space as the location's set (`save_asset` `identity.set`): bounds in meters, each side solid, railing or open, doors/windows/gaps on their walls, fixed furniture with stable IDs. Put only real boundaries in the set: a wall removed for filming is hidden per shot, never deleted. In the description, say which measurements are confirmed and which are working assumptions, and where they came from.
+
+## Space before pictures
+
+For a new location, save the set first and make its references from it:
+
+1. Add a previs node with `stage.location` = the location and no actors, tracks, landmarks or overrides; one Shot per view, each with a single static camera key.
+2. Connect each view Shot to an image node's `image` input (layout), plus the tone reference when one exists. Describe materials and light in the prompt. Do not connect the location's own asset node while it has no reference images.
+3. Save an accepted result as the location's reference with `camera` = `get_task` `setViewCamera` of the task that made it. When it is null, save the image without a camera.
+4. Ask the user to check at least two clearly different views against the set in the asset library (camera button on the reference). You cannot judge the overlay; report the views as unchecked until they do.
+
+For a location whose references are already accepted, derive a working set from them, label it as such in the description, and ask the user to place and check cameras for two different views. A mismatch is fixed in the set or by remaking the reference; never keep two room designs.
 
 ## Establish geography before decorative variants
 
@@ -8,7 +19,7 @@ Create an empty anchor wide view showing the main action area and a few fixed sp
 
 If reverse angles are needed, derive them from that geography. A new angle must show the same room rather than rearranging doors and furniture to make a pretty composition. A simple top-down layout can support complex blocking, but it is an explanatory board, not automatically a photo reference.
 
-When a shared previs exists, use its approved spatial relationships when generating new location views. Check the actual images: shared 3D layout does not ensure a model kept the door, window or table in the correct place. Resolve a mismatch in the owning asset/layout rather than maintaining two conflicting room designs.
+When the location has a set, use a view of it as the layout guide when generating new location views. Check the actual images: shared 3D layout does not ensure a model kept the door, window or table in the correct place. Resolve a mismatch in the owning asset/layout rather than maintaining two conflicting room designs.
 
 ## Maintenance and wear
 

@@ -7,7 +7,7 @@ description: Make episodic short dramas on Klox - develop the story, block scene
 
 This skill owns story and production decisions. The canvas skill owns tool operations, uploads, credits and input routing; asset-design owns reusable visual references. Keep the screenplay, scene previs, visual assets and edit plan connected without duplicating their authority.
 
-Skill version 1.4.12. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.13. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
@@ -34,7 +34,7 @@ Fix current-stage findings, return upstream changes to their owner, and redo onl
 | --- | ---------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------- |
 | 0   | Series development                       | Brief, Series Arc, Payoff Map, Episode Map                                          | Story choices and rhythm profile                                |
 | 1   | Episode screenplay                       | EP01 · Script                                                                       | Events, lines, estimated sound and action timing                |
-| 2   | Visual bible                             | Accepted asset references, voices and required light states                         | Identity, state, usable dimensions and references               |
+| 2   | Visual bible                             | Accepted asset references, voices, required light states, location sets and bodies  | Identity, state, space, dimensions and references               |
 | 3   | Scene previs, shots and rough timing cut | Shared previs per needed scene, Shot List, Greybox Cut where exports are accessible | Blocking, coverage, edit order, sound windows and dramatic flow |
 | 4   | Visual keyframes                         | Reviewed opening keyframes and needed additional states                             | Match the planned geometry and accepted assets                  |
 | 5   | Clip input and prompt preparation        | Legal model route and inputs per clip                                               | Handoff checks and credit estimate                              |
@@ -55,6 +55,7 @@ Read only the needed reference:
 ## Handoff checks
 
 - **Script → scene and shot plan:** every shot names a source scene and dramatic job. Every scene is covered or deliberately omitted with a reason. Every line and key sound has one planned sound source; picture coverage may overlap in scene time, but the edit shows each event once unless repetition is deliberate.
+- **Assets → previs:** every location a previs scene stands in has a set whose key views the user has checked against its references, and every acting character has a body. Missing ones are made first, in asset design.
 - **Previs → timing cut:** each previs-backed shot names the node, Shot ID and scene-time window. Actor proportions, state transitions and cameras support the shot's job. Use computed Screen maps when available; inspect actual playback for intervening action, occlusion and reveals. Shots without previs state their route and the visual evidence used instead. A scene played from a free camera is not an assembled cut.
 - **Plan → keyframes and clips:** each clip names its shot(s), requested duration, reference window and planned cut length. Its accepted opening picture matches the intended start, or its verified direct-reference route explains the omission. Inputs and audio settings satisfy current capabilities; identity, look, location and state reach the model through that route. A clip has at most one image marked opening. Lines appear verbatim in the prompt of their designated sound-source clip, not in every coverage angle.
 - **Clips → edit:** every cut references an inspected take with source in/out inside the actual clip. The sound timeline includes each line exactly once, complete, with correct speaker; captions match the screenplay. Compare motion and end state with the plan before replacing its placeholder.
