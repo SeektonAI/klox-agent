@@ -8,7 +8,7 @@ Define silhouette, main dimensions or relative scale, material, distinguishing f
 
 For a product, preserve the supplied packaging and exact required logo/text. Do not redesign brand facts without authorization. An attractive generated label is insufficient: inspect required text and repair it before using the image as a reference.
 
-For previs-backed interactions, pass approved dimensions and functional contact features in the description. A prop Actor is a geometric stand-in, not automatically a rigged or attachable copy of the asset; check the currently supported scene capabilities. Reference design acceptance does not prove that the video model executes the contact.
+For previs-backed interactions, pass approved dimensions and functional contact features in the description. A prop Actor is a geometric stand-in, not automatically a rigged or attachable copy of the asset; check the currently supported scene capabilities. Reference design acceptance does not prove that the video model executes the contact. Furniture that belongs to a location's set moves in previs as a fixture prop that keeps its set reference for size and initial placement; a transform track then describes movement and tipping in world space. It does not solve grasping, attachment, gravity or collision: design and test hand contact separately, as a static before/after study or an insert.
 
 ## States and interaction
 

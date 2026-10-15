@@ -7,12 +7,12 @@ description: Make episodic short dramas on Klox - develop the story, block scene
 
 This skill owns story and production decisions. The canvas skill owns tool operations, uploads, credits and input routing; asset-design owns reusable visual references. Keep the screenplay, scene previs, visual assets and edit plan connected without duplicating their authority.
 
-Skill version 1.4.13. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.14. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
 1. **Story before pixels.** Fix the earliest stage where a story promise is lost, rather than trying to repair it with prompts or retakes.
-2. **Each fact has an owner.** The screenplay owns events, lines and continuity facts; assets own identity, looks and reference states; shared scene previs owns spatial relationships, action timing and cameras; the shot list and cut list own dramatic purpose, coverage and edit order. Downstream must not silently change confirmed upstream facts.
+2. **Each fact has an owner.** The screenplay owns events, lines and continuity facts; assets own identity, looks, reference states, fixed location geometry (set) and base character size (body); shared scene previs owns scene-specific spatial overrides, blocking, action timing and cameras; the shot list and cut list own dramatic purpose, coverage and edit order. Downstream must not silently change confirmed upstream facts.
 3. **One main dramatic job per shot.** A shot can contain a short action chain and reactions. Split it when it starts doing another job, not merely to fit a model's duration.
 4. **Block and cut before final rendering.** When space, motion or camera matter, use shared scene previs and review its shots in edit order before producing final keyframes and video. Static keyframe animatics remain useful for shots without previs.
 5. **An accepted picture is a visual target, not always a strict first frame.** Important shots normally have a reviewed opening keyframe. Its input role depends on the chosen model route. Simple shots may use assets plus previs directly when that route has been verified and the task allows it; record the reason for omitting a keyframe.
