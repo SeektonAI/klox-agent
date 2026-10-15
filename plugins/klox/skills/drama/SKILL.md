@@ -7,7 +7,7 @@ description: Make episodic short dramas on Klox - develop the story, block scene
 
 This skill owns story and production decisions. The canvas skill owns tool operations, uploads, credits and input routing; asset-design owns reusable visual references. Keep the screenplay, scene previs, visual assets and edit plan connected without duplicating their authority.
 
-Skill version 1.4.14. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.15. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
