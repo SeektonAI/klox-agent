@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.4.19. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
+Skill version 1.4.20. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
 
 ## Before you start
 
@@ -45,7 +45,7 @@ For drama, follow the drama skill's sound planning and repair decisions. On the 
 
 - Create scene sound plans as `soundPlan` nodes. For a check, add an `audio` node with model `klox-sound-check`, connect the inspected video or compose node to its `source` input, and set `soundPlanNodeId` to the intended plan. Without it only a canvas with exactly one sound plan resolves automatically. An episode with several scenes needs a film check for each plan; each may read the same film.
 - Read the report through `get_task` and delivery decisions through `get_sound_checks`. Text transcription is evidence of wording, not speaker identity, voice consistency or lip sync. Untagged music, event material/count, room tone and double plays can remain undecided. Repeating the same check without changing its inputs does not add the missing capability.
-- An active `productionRun` supplies the user's budget and evidence policy; it does not enlarge the creative scope. Reuse that authorization and read the drama skill's [autonomous-run procedure](../drama/SKILL.md#autonomous-runs) for production. Initial generation can use `run_nodes`; paid repairs of a check use `run_node` with `checkItem`, because batches have no per-check attribution. Reserve credits for analysis as well as generation.
+- An active `productionRun` supplies the user's budget and evidence policy; it does not enlarge the creative scope. Reuse that authorization and read the drama skill's [autonomous-run procedure](https://klox.ai/agent/skills/drama/SKILL.md#autonomous-runs) for production. Initial generation can use `run_nodes`; paid repairs of a check use `run_node` with `checkItem`, because batches have no per-check attribution. Reserve credits for analysis as well as generation.
 - `outputApprovedByUser` pins the chosen result even after new tasks succeed. `soundPlanApproved` and approved timeline clips protect their content. Keep them intact; a conflicting change requires the user to remove the approval on the canvas. An ordinary selected result (`outputSelectedByUser`) is different: a newer successful task can supersede it.
 
 ## Asset references and task prompts

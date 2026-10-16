@@ -109,7 +109,7 @@ For clients without plugin support, follow https://klox.ai/agent to add MCP and 
 
 This repository is published automatically from the Klox main repository. Changes made here are overwritten on the next release; please open an issue instead of a pull request.
 
-Claude Code, Codex, Cursor and Grok share `plugins/klox/.mcp.json` and `plugins/klox/skills/`. Each client has its own marketplace index. When releasing changes to bundled plugin content, bump the version and keep the Claude Code, Codex and Cursor plugin manifest versions and every skill's version in sync; installed users load a cached copy. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
+Claude Code, Codex, Cursor and Grok share `plugins/klox/.mcp.json` and `plugins/klox/skills/`. Each client has its own marketplace index. In the Klox source repository, the shared release version is declared in `src/features/integrations/mcp/agent-plugin.config.json`, also used by the MCP skill update instructions. When releasing changes to bundled plugin content, bump that version and keep the Claude Code, Codex and Cursor plugin manifest versions and every skill's version in sync; installed users load a cached copy. Publication compares against the public repository before replacing files: an identical release is a no-op, changed content requires a higher version, and version rollbacks are rejected. In the source repository, `npm run test` and `npm run plugin:publish` both run `plugin:validate`; it can also be run separately.
 
 ## Support
 
