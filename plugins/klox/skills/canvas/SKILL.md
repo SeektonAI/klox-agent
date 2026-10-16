@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.4.20. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
+Skill version 1.4.21. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
 
 ## Before you start
 
@@ -26,7 +26,8 @@ For an episodic drama (a series, a pilot, a microdrama, a story adapted into epi
 3. **Plan scenes, then their outputs** with `apply_workflow_change`. For a film whose blocking, scale or camera matters, read [previs.md](references/previs.md) before building it:
    - a script/Brief and a shot list with dramatic jobs, sound sources and planned cuts;
    - one shared previs node per needed scene, with actors, landmarks, action tracks and observations named by Shot IDs;
-   - a greybox timing review in edit order, before expensive final images; use available exports and local assembly, or explicitly report the limitation of browser playback plus a cut plan;
+   - visual review through the previs node's `reviewUrl`, freezing a baseline before repairs and comparing after saving; follow [previs.md](references/previs.md#inspect-frames-on-the-review-page) for frame selection and evidence limits;
+   - a greybox timing review in edit order, before expensive final images; use continuous playback or available exports and local assembly. Static review frames plus a cut plan leave dynamic timing and the assembled edit unverified;
    - image nodes for the reviewed opening keyframes needed by the route, fed by the matching previs Shot's `image` output and project assets;
    - one video node per shot by default. A previs-backed clip takes its Shot on `video`; choose the opening picture input from `get_capabilities.referenceVideoRoutes`. `firstFrame` means that combination is legal, `image` means a normal image with `purpose: "opening"`, and `null` means no opening-picture input beside the video. Check voice and other reference combinations separately;
    - a compose node fed by the accepted video takes, with the cut list controlling actual order and ranges.
