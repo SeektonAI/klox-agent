@@ -47,7 +47,7 @@ Use a video model that generates picture and audio together. Check `get_capabili
 
 The prompt carries the clip's dialogue verbatim, with speaker, delivery and timing. Distinguish visible speech, off-screen speech and voice-over; only the visible speaker should lip-sync. Connect accepted character voice references where supported, and keep each character's voice direction consistent across clips. Verify the generated audio for complete wording, correct speaker, voice consistency and synchronization with visible speech.
 
-Dialogue and scene sound come from the video clips. Music and captions are added in the edit. Cross-cut dialogue may use an audio segment extracted from a generated clip; it is not a separately synthesized performance.
+Each clip generates its own dialogue and the event sounds the sound plan assigns to it, dry and close-mic, with no ambience, room tone or music: the edit lays continuous ambience and music under the whole scene, and a clip that brings its own room tone jumps at every cut. A clip that carries over another shot's sound generates nothing of it. Dialogue that continues across a cut plays from its source clip in the edit, so its own take is never re-spoken by another clip.
 
 ## Prompt structure
 
@@ -57,9 +57,19 @@ Write the prompt in one language, with dialogue quoted verbatim in the language 
 2. **Continuity locks** of every look in the shot, verbatim.
 3. **Action**: from the reviewed opening state, the shot's action (one move or a short chain) with its trigger, contact and landing, then the secondary reaction (the listener's face, cloth, hair, dust).
 4. **Camera**: with previs, retain its selected camera and temporal intent without writing a second camera path; without previs, describe the shot list's camera and timing. State one continuous shot when cuts are not intended.
-5. **Sound timeline**: room tone and each sound effect with its timing; "no background music". Every assigned line with speaker, delivery and timing, quoted once, verbatim from the screenplay. Mark visible speech, off-screen speech and voice-over explicitly.
+5. **Sound**: start with the sound block below. Every line this clip is the source of, with speaker, delivery and timing, quoted once, verbatim from the screenplay; mark visible speech, off-screen speech and voice-over. Each event this clip is the source of, with its trigger, material, force, count and natural decay. Name the sounds that an earlier shot already made and this one must not repeat.
 6. **End state**: the shot list's end state, reached within the cut length and held to the end of the requested duration.
 7. **Text**: "no subtitles, captions or overlaid text". If the opening frame shows in-world text (a phone screen, a sign), add "keep the text on the <surface> unchanged" (see Text below).
+
+The sound block, at the start and again at the end (models ignore a single no-music line):
+
+```text
+Sound: only the dialogue, breaths and the listed action sounds. Dry, close-mic dialogue, minimal reverberation. No ambience, no room tone, no background music, no score, no transition sounds.
+...
+End: only the listed dialogue and action sounds; no music.
+```
+
+Never turn the clip's audio off to avoid music: that loses the dialogue.
 
 For a multi-cut generation, write timed sections that join end to start and add up to the duration: `(0:00–0:03) Shot 1, insert: …`, and list which reference image is which cut's frame before the sections.
 
@@ -74,7 +84,7 @@ Two kinds, two routes:
 
 ## Dialogue capacity
 
-Estimate the speaking time of every line at the normal rate and make sure it fits the requested duration with room for the reaction. Models that run out of time drop the rest of the line without any error, and some models rewrite prompts before generating. After every clip, check that each line is spoken completely and verbatim. A line that spans several shots is generated once, in the speaker's clip, and the edit lays that audio under the other shots. The other shots' prompts describe the listener reacting in silence with room tone only, and never mention the line, even as off-screen speech; otherwise the model speaks it again in a different take.
+Estimate the speaking time of every line at the normal rate and make sure it fits the requested duration with room for the reaction. Models that run out of time drop the rest of the line without any error, and some models rewrite prompts before generating. After every clip, check that each line is spoken completely and verbatim. A line that spans several shots is generated once, in the speaker's clip, and the edit lays that audio under the other shots. The other shots' prompts describe the listener reacting in silence, and never mention the line, even as off-screen speech; otherwise the model speaks it again in a different take.
 
 ## Production
 
@@ -93,6 +103,20 @@ Estimate the speaking time of every line at the normal rate and make sure it fit
    | Story       | The shot works but the moment does not                                                                        | Stage 1                                                                           |
    | Variance    | Inputs and prompt are sound; the result is just unlucky                                                       | Retry once with a new idempotency key                                             |
 
-   Stay within the retry cap; once it is reached, stop and report the classification instead of rolling again.
+   Stay within the authorized retry cap; during an active production run, also respect the shared per-check limit. Stop repairing that shot/check at the limit, record the classification, and continue independent work that still fits the scope and budget.
 
 5. Record credits spent, attempts per shot and the failure causes for the production log.
+
+## When a sound check fails
+
+Run a sound check node on every accepted clip; `get_sound_checks` turns its report into a status per line and event. It hears the words and tags sounds such as music. Music it tags is a failure; music it did not tag is only undecided, since quiet music under dialogue may go untagged. It cannot judge an event's material and count, room tone, or double plays in the film either; undecided checks follow the run's policy. For each check node, set `soundPlanNodeId` explicitly when the canvas has several scene plans. Use `run_node` with that failed check as `checkItem` on every paid repair during an active production run; do not put repairs in `run_nodes`, which cannot attribute them to a check. Use the following remedies only when the evidence identifies an actual defect. An undecided check for an unsupported property is not evidence that regenerating will help: follow its policy, declare only `exception_allowed` items through `declare_check_exception`, or leave the required listening decision unresolved. Repair in this order:
+
+| Problem                                   | Try, in order                                                                                                              |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| A line misspoken, cut off or missing      | Regenerate the source clip with more time for the line                                                                     |
+| Music or a transition sound in the clip   | Trim the affected range in the edit → regenerate → keep the voice (voice isolation) and add back the events the plan needs |
+| An event missing or heard the wrong times | Regenerate the source clip → if the clip has no dialogue, mute that range and add the effect                               |
+| A tail clashing with the next line        | Move the next line after the tail                                                                                          |
+| Room tone jumps between shots of a scene  | Regenerate the shot that jumps; continuous ambience covers only slight differences                                         |
+
+Voice isolation removes every non-voice sound, the wanted events included. Replace the affected sound in the compose timeline, mute the overlapping original sound, and check the resulting film against that scene's plan. Do not recheck only the unchanged original video and claim it proves the isolated replacement. A transcript cannot establish the correct speaker, voice identity, lip sync, or exact event count; record those as unverified without separate inspection.

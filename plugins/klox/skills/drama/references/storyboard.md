@@ -23,7 +23,7 @@ For each key scene, write a short paragraph answering:
 5. **Held moment**: which reaction or silence the scene stays on, and for how long.
 6. **Sound**: the leading sound source, where silence is used, and where sound arrives before the picture or carries over a cut.
 
-Then block the scene in a **previs node** (`EP01-SC02 · Previs`, one per scene with two or more subjects or any move that matters, not only key ones; see the canvas skill). It stands in the location's set (`stage.location`), so doors, counters and windows are where the location's references show them; every actor carries its asset id and takes its real size from the character's body, with a distinct color; and the timeline holds what each actor does over the whole scene: where it walks, when it sits, kneels, falls or lies down, where it looks. Its shots are observations of the same action, each with a scene-time window, camera keys and aspect ratio. A setup may be used in several windows; name each Shot by its stable shot-list ID and record its setup separately. The user watches it play on the canvas; this is the cheapest place to fix blocking, scale and camera, before any image is generated. Every previs-backed shot names its setup and Shot ID. Use the canvas skill's previs reference for writing, reading and exporting; unsupported interactions must use another supported route or different coverage. An insert whose action the stand-ins cannot perform still gets its Shot, with its real camera and window and a note naming the action, so the whole-scene playback, which plays only Shots, includes it. Use supported reach tracks for hand placement; attachment remains unavailable.
+Then block the scene in a **previs node** (`EP01-SC02 · Previs`, one per scene with two or more subjects or any move that matters, not only key ones; see the canvas skill). It stands in the location's set (`stage.location`), so doors, counters and windows are where the location's references show them; every actor carries its asset id and takes its real size from the character's body, with a distinct color; and the timeline holds what each actor does over the whole scene: where it walks, when it sits, kneels, falls or lies down, where it looks. Its shots are observations of the same action, each with a scene-time window, camera keys and aspect ratio. A setup may be used in several windows; name each Shot by its stable shot-list ID and record its setup separately. The user watches it play on the canvas; this is the cheapest place to fix blocking, scale and camera, before any image is generated. Every previs-backed shot names its setup and Shot ID. Use the canvas skill's previs reference for writing, reading and exporting; unsupported interactions must use another supported route or different coverage. An insert whose action the stand-ins cannot perform still gets its Shot, with its real camera and window and a note naming the action, so the whole-scene playback, which plays only Shots, includes it. Use reach tracks for hand placement and attach every prop a character holds (canvas skill, previs reference).
 
 If two genuinely different approaches exist (play it in one held two-shot, or fragment it into close-ups), compare them in two lines each and pick one; otherwise do not invent alternatives. Then turn the plan into the shots' jobs, sizes, camera, start and end states and sound. Check afterwards that space, camera and sound all carry the same turn, rather than a generic medium shot, reverse, push-in pattern.
 
@@ -86,6 +86,22 @@ Run the canvas skill's pre-generation checks on every shot. Give each shot separ
 - Use one style sentence for the whole episode and one light sentence per scene, identical in every keyframe.
 - For close shots, state the crop precisely (cut at the collarbone, face in the upper third). A location reference tends to widen the frame; if close keyframes keep coming out wide, drop the location asset for that shot and describe the background in words.
 - In-world text (a phone screen, a sign) only where the story needs it, short and written exactly; check it on the keyframe. Overlay text (captions, titles, chat bubbles) never goes into a keyframe; it is added in the edit.
+
+### Sound plan
+
+Write the scene's sound plan as a sound plan node (`addNodes` kind `soundPlan`) once its clips exist as video nodes, and keep it current when shots change. Use actual video node IDs for `source` and `continuesOver` (or their local IDs within the same change), not shot labels from the table below. Keep the prose table as a planning view, not a substitute for the structured node. Each line and key sound from the screenplay is one item:
+
+| Item          | Kind  | Critical | Source | Carries over | Content                                   | Tail / stop                       |
+| ------------- | ----- | -------- | ------ | ------------ | ----------------------------------------- | --------------------------------- |
+| L03           | line  | yes      | S02    | —            | Lena: "Who is out there?"                 | —                                 |
+| door-close-01 | event | yes      | S01    | S02          | The heavy door hits the frame once, rings | rings out about 1.5 s; S02 silent |
+| phone-ring-01 | event | no       | S18    | S19          | The phone rings in pairs                  | stops when answered               |
+
+- **One source shot per sound.** That clip generates it; the shots it carries over never generate it again, they start after it. A reverse angle of the same action does not repeat the sound.
+- **Cut after the sound finishes** when you can. When the cut lands on an impact, the source clip still runs long enough for the tail, and the edit carries the tail over the next shot.
+- **Keep a new line out of a carried tail.** Until the pilot episode shows that overlapping a tail with new dialogue sounds right, start the next shot's line after the tail ends: the two clips' sound cannot be separated once mixed.
+- **Critical** marks what the film fails without: lines are normally critical; decorative sounds are not.
+- Lasting sounds (a ringing phone, footsteps across shots) are one item with a start, the shots they carry over and what stops them.
 
 ## Stage 3c · Greybox timing cut
 

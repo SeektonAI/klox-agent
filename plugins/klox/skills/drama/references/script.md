@@ -24,6 +24,7 @@ CHARACTER A (turning to Character B): You said you had the key.
 - One line per beat. A beat is either an action (`[ACTION]`, one visible thing happening) or one line of dialogue (`NAME (delivery): line`).
 - Other tags: `[VO]` narration or inner voice, `[OS]` spoken off screen, `[SFX]` a sound that matters, `[TEXT]` in-world text the story needs, with its surface (`[TEXT] phone screen: "Payment overdue"`), `[TITLE]` overlay text added in the edit (`[TITLE] 8 HOURS EARLIER`), `[CONT]` a state downstream must keep (Character B holds the key in the right hand from here).
 - No quoted dialogue inside action lines. Subtext goes into the delivery note, not into the line.
+- Give every line and every sound that matters a stable id when the screenplay is accepted (`L03`, `door-close-01`). Note for each sound what makes it, the material, force and count, whether it is heard on or off screen, and why the story needs it. An off-screen sound (a knock, a phone in another room) is a sound event like any other; list it. A sound that happens again later gets a new id; one action seen from two angles keeps its id. These ids become the scene's sound plan items.
 
 ## Timing
 

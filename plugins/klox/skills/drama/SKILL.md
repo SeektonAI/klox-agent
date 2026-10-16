@@ -7,7 +7,7 @@ description: Make episodic short dramas on Klox - develop the story, block scene
 
 This skill owns story and production decisions. The canvas skill owns tool operations, uploads, credits and input routing; asset-design owns reusable visual references. Keep the screenplay, scene previs, visual assets and edit plan connected without duplicating their authority.
 
-Skill version 1.4.17. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.19. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
@@ -30,17 +30,17 @@ Fix current-stage findings, return upstream changes to their owner, and redo onl
 
 ## Stages and handoffs
 
-| #   | Stage                                    | Output                                                                              | Review before handoff                                           |
-| --- | ---------------------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| 0   | Series development                       | Brief, Series Arc, Payoff Map, Episode Map                                          | Story choices and rhythm profile                                |
-| 1   | Episode screenplay                       | EP01 · Script                                                                       | Events, lines, estimated sound and action timing                |
-| 2   | Visual bible                             | Accepted asset references, voices, required light states, location sets and bodies  | Identity, state, space, dimensions and references               |
-| 3   | Scene previs, shots and rough timing cut | Shared previs per needed scene, Shot List, Greybox Cut where exports are accessible | Blocking, coverage, edit order, sound windows and dramatic flow |
-| 4   | Visual keyframes                         | Reviewed opening keyframes and needed additional states                             | Match the planned geometry and accepted assets                  |
-| 5   | Clip input and prompt preparation        | Legal model route and inputs per clip                                               | Handoff checks and credit estimate                              |
-| 6   | Clip production                          | Reviewed takes                                                                      | Action, motion, appearance, sound and continuity                |
-| 7   | Edit                                     | Cut List, compose rough cut, finished episode                                       | Replace planned shots with accepted takes, preserve sound       |
-| 8   | Review                                   | Production log in Brief                                                             | Lessons for the next episode                                    |
+| #   | Stage                                    | Output                                                                                          | Review before handoff                                           |
+| --- | ---------------------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 0   | Series development                       | Brief, Series Arc, Payoff Map, Episode Map                                                      | Story choices and rhythm profile                                |
+| 1   | Episode screenplay                       | EP01 · Script                                                                                   | Events, lines, estimated sound and action timing                |
+| 2   | Visual bible                             | Accepted asset references, voices, required light states, location sets and bodies              | Identity, state, space, dimensions and references               |
+| 3   | Scene previs, shots and rough timing cut | Shared previs per needed scene, Shot List, sound plan, Greybox Cut where exports are accessible | Blocking, coverage, edit order, sound sources and dramatic flow |
+| 4   | Visual keyframes                         | Reviewed opening keyframes and needed additional states                                         | Match the planned geometry and accepted assets                  |
+| 5   | Clip input and prompt preparation        | Legal model route and inputs per clip                                                           | Handoff checks and credit estimate                              |
+| 6   | Clip production                          | Reviewed takes and their sound checks                                                           | Action, motion, appearance, sound and continuity                |
+| 7   | Edit                                     | Cut List, compose timeline with ambience and music, finished episode                            | Each sound once, tails kept, film sound check                   |
+| 8   | Review                                   | Production log in Brief                                                                         | Lessons for the next episode                                    |
 
 Start at the stage justified by existing material. Asset development and previs may progress together once identity and essential dimensions are settled; do not require all decorative references before testing blocking. For a request to make an episode, review the stage 3 timing cut before final rendering, then stage 4 keyframes before video generation. Reuse approval and credit scope already given; do not ask again for each shot or view.
 
@@ -54,20 +54,29 @@ Read only the needed reference:
 
 ## Handoff checks
 
-- **Script → scene and shot plan:** every shot names a source scene and dramatic job. Every scene is covered or deliberately omitted with a reason. Every line and key sound has one planned sound source; picture coverage may overlap in scene time, but the edit shows each event once unless repetition is deliberate.
+- **Script → scene and shot plan:** every shot names a source scene and dramatic job. Every scene is covered or deliberately omitted with a reason. Every line and key sound is an item of the scene's sound plan with exactly one source shot; picture coverage may overlap in scene time, but the edit shows and plays each event once unless repetition is deliberate.
 - **Assets → previs:** every location a previs scene stands in has a set whose key views the user has checked against its references, and every acting character has a body. Missing ones are made first, in asset design.
 - **Previs → timing cut:** each previs-backed shot names the node, Shot ID and scene-time window. Actor proportions, state transitions and cameras support the shot's job. Use computed Screen maps when available; inspect actual playback for intervening action, occlusion and reveals. Shots without previs state their route and the visual evidence used instead. A scene played from a free camera is not an assembled cut.
 - **Plan → keyframes and clips:** each clip names its shot(s), requested duration, reference window and planned cut length. Its accepted opening picture matches the intended start, or its verified direct-reference route explains the omission. Inputs and audio settings satisfy current capabilities; identity, look, location and state reach the model through that route. A clip has at most one image marked opening. Lines appear verbatim in the prompt of their designated sound-source clip, not in every coverage angle.
-- **Clips → edit:** every cut references an inspected take with source in/out inside the actual clip. The sound timeline includes each line exactly once, complete, with correct speaker; captions match the screenplay. Compare motion and end state with the plan before replacing its placeholder.
+- **Clips → edit:** every cut references an inspected take with source in/out inside the actual clip, and its sound check passed or its failure is handled. The sound timeline includes each line and key sound exactly once, complete, with correct speaker and its tail intact; captions match the screenplay. Compare motion and end state with the plan before replacing its placeholder.
 - **Freshness:** use available asset-outdated flags, current previs export status and recorded source/take IDs. After a relevant upstream change, identify which pictures, clips and cuts need rechecking. Titles and display edits alone do not invalidate pictures. When provenance is not exposed, record known changes and unverified dependencies instead of claiming a timestamp check proves freshness.
 
 ## Canvas and production contract
 
 Use one project per series, a series bible canvas for long-lived story decisions, and one canvas per episode. Group scene nodes by stable scene IDs; name previs nodes EP01-SC02 · Previs, shots EP01 S07, keyframes EP01 S07 · KF, clips EP01 S07 · Clip and cuts EP01 · Greybox Cut / Cut List. Keep repeated characters, locations and props in project assets, one asset node per look and state.
 
-The Brief holds audience, format, style, language, rhythm profile, model/input route, audio production, credit scope and production log. Default drama audio is generated with picture: dialogue, voice-over and scene sound come from video clips; music and captions are added in the edit. Do not silently add separately synthesized episode dialogue. Previs sound windows and temporary dialogue cards are timing aids, not verified voice or lip sync.
+The Brief holds audience, format, style, language, rhythm profile, model/input route, audio production, credit scope, autonomy and production log. Default drama audio: each video clip generates its dialogue, breaths and laughs, and the event sounds the sound plan assigns to it, as dry close-mic sound with no ambience, room tone or music. Scene ambience and music are laid in the edit on their own audio tracks, continuous across the cuts of a scene; captions are added in the edit. Keep one sound plan node per scene. Do not silently add separately synthesized episode dialogue. Previs sound windows and temporary dialogue cards are timing aids, not verified voice or lip sync.
 
 Ask at unresolved creative forks and when the next work exceeds existing approval or credit scope. At a handoff, show the concrete result, findings, remaining uncertainty and next cost. Continue ordinary work within an approved stage without repeated permission requests.
+
+## Autonomous runs
+
+When `get_workflow` shows a `productionRun` in progress, the user has set a budget and what happens when a check cannot decide. Within the creative scope the user delegated, perform each stage review yourself and continue without repeating its approval gate. A budget alone does not settle an unresolved creative fork or replace an explicit request to review a stage:
+
+- Plan within `remainingCredits`; never ask to raise the budget. Every attributed task, including sound analysis and paid repairs, counts against it; reserve room for checks. Use `run_nodes` for initial batches and `run_node` with `checkItem` for paid repairs, since `run_nodes` has no per-check field.
+- After a clip is generated, run a sound check node on it; after the edit, run one on the film. Read `get_sound_checks` and act on each status: `blocked` → fix it with the decision rules in [clips.md](references/clips.md#when-a-sound-check-fails); `pending` → the take, line or timeline changed, check again; `exception_allowed` → declare it with a reason the user will read, or fix it if that is cheap; `needs_human` → stop work on that check and identify the exact listening decision still required. `pass` and `exception` need no further repair. A missing report is different from an undecided result: read the evidence before rerunning; do not spend on repeated analyses or retakes for a property the analyzer cannot judge.
+- Pass the failed check as `checkItem` on every paid repair. Repairs of one check share one limit, whatever the method; once it is used up, move on and list the check.
+- Deliver a film as releasable only when its checks are all `pass` or declared exceptions. If budget, repair limits, blocked checks with no supported remedy, or required human listening prevent completion, deliver the best current cut as unfinished with a failure or listening report. MCP cannot end the production run; the user ends it on the canvas. In either outcome, list every check with its status and evidence, every exception and its reason, and the credits spent. Do not stop midway to ask the user to rescue a failed shot.
 
 ## Changes and diagnosis
 
@@ -77,6 +86,6 @@ Trace a weak episode through screenplay → scene plan/previs → timing cut →
 - Blocking, actor dimensions or camera changes: update the shared previs, recheck its timing cut and affected keyframes/clip inputs; old generated takes are not automatically refreshed.
 - A shot splits or merges: update coverage and cut mappings, retaining unaffected IDs.
 - An asset reference changes: inspect affected identity/look/state uses and available outdated flags.
-- A selected take changes: update picture and audio source ranges in the cut list.
+- A selected take changes: update picture and audio source ranges in the cut list; its sound checks go stale, so check it again.
 
 Tell the user which nodes need regeneration and the credits before spending outside the existing scope.
