@@ -1,10 +1,16 @@
 # Stages 5–6 · Clip prompts and production
 
-## One generation per shot by default
+## Generation groups before video nodes
 
-Make one video node per shot by default, using its approved scene window and visual inputs. Independent takes let the edit control cuts and let a failed shot be redone alone. Use the input route below; a keyframe is normally reviewed first, with verified direct asset-plus-previs routes as an explicit exception.
+Keep edit Shot IDs independent of generation units. Before creating video nodes, compare neighbouring shots as possible groups: same scene and light, compatible character and prop states, continuous action or a complete dialogue passage, and tolerable drift in generated cut points. Dialogue is eligible when speaker identity, voice and visible lip sync can be checked throughout. A group may supply several edit shots, each retaining its own dramatic job and source range.
 
-Group neighbouring shots into one multi-cut generation only when all of these hold: same scene and light, no dialogue or only off-screen voice, exact cut points do not matter (a montage, a chase), total within the chosen model's duration range (15 seconds and four cuts are useful starting limits, not capability guarantees). Each cut in the group still gets its own keyframe. Expect cut points to drift by half a second or more and later cuts to resemble their keyframes less.
+Start by considering 2–4 shots over 6–15 seconds. Use 15–30-second groups only when supported by the current route and the passage is simple, coherent and easy to review. These are starting suggestions, not required lengths or model capability tables; read `get_capabilities` for actual limits. Keep high-risk contact, critical prop details, state reveals, strict lip-sync moments and shots needing independent repair separate when a failed detail would force an expensive group retake. A single-shot generation remains appropriate when that is the cheaper reliable route.
+
+Write an episode generation grouping plan in existing text nodes before clip production. Each row records group ID, ordered Shot IDs, planned picture use per shot, requested duration and trim handles, model and input route, assigned sound item IDs, an explicit audio-setting entry on every row, estimated credits and where to split if the group fails. Each planned Shot ID belongs to one group and has a planned local interval; actual take IDs and inspected source ranges replace those estimates after generation. Keep keyframes for the covered cuts unless an already verified direct route justifies their omission. Update the structured sound plans with actual video node IDs once the groups exist. These records are production notes, not new API fields.
+
+Target a **first-pass footage ratio** (initial requested video seconds / planned picture seconds) of about 1.3 or less. A higher value triggers review and a recorded reason, not a hard rejection: complete dialogue, sound tails over other pictures and high-risk coverage may justify it. Also report the **actual generation ratio** (requested video seconds across all attempts / final picture seconds). Keep both in the production log with group count, retake rate (groups needing another attempt / groups attempted), actual credits and the causes of excess or retries. During production, mark ratios against the still-planned edit as provisional.
+
+Compute estimated credits from the actual model policy (`VIDEO_MODEL_POLICIES` when working in the repository) or current tool estimates for each model, route, resolution and other billable options. Compare first-pass cost plus expected retry and analysis/repair costs. With otherwise equal per-second pricing, reducing requested seconds reduces first-pass cost proportionally; mixed models or settings need a weighted credit calculation. Minimize expected total cost of accepted footage, not node count alone. Generate and review a representative group before expanding a new grouping route to the episode, within the existing budget. If one cut fails, preserve usable ranges and generate the missing coverage separately when continuity and sound allow it; avoid rerendering accepted material merely to keep the original grouping.
 
 Never connect a storyboard grid to a video node.
 
@@ -16,22 +22,23 @@ Keep these apart in the shot list and cut list. Store them as production notes u
 - **Reference duration**: the exported window, within the selected model's input limits. This is distinct from output duration.
 
 - **Cut length**: how long the shot plays in the episode (from the storyboard).
-- **Requested duration**: what the clip node asks the model for. It follows the model's allowed values, at least the cut lengths of the shots it serves, and long enough for every line generated in it, including the part heard over later shots. A 2-second shot on a model whose minimum is 4 seconds requests 4.
+- **Requested duration**: what the clip node asks the model for. It follows the model's allowed values, covers the combined planned picture use of the shots it serves plus necessary trim handles, and is long enough for every line generated in it, including the part heard over later shots. A 2-second shot on a model whose minimum is 4 seconds requests 4.
 - **Source in and out**: where the edit takes the shot from inside the generated clip.
 
-Prefer matching the reference and requested durations when using previs, but inspect the actual generated timing. When the request is longer than the cut, use an explicit same-camera waiting/hold window that fits the model, then trim the result. Do not slow the action or change shared downstream scene events just to fill a model minimum. There is no automatic tail-hold export setting today: use a valid window with a real hold, or a locally prepared reference when accessible. Several shots may use one multi-cut take, each with its own source in/out.
+Prefer matching the reference and requested durations when using previs, but inspect the actual generated timing. When the request is longer than the cut, use an explicit same-camera waiting/hold window that fits the model, then trim the result. Do not slow the action or change shared downstream scene events just to fill a model minimum. There is no automatic tail-hold export setting today: use a valid window with a real hold, or a locally prepared reference when accessible. Several shots may use one multi-cut take, each with its own inspected source in/out. The supported maximum is a ceiling, not a target; avoid uniform 4–5-second requests for short coverage when a shorter legal request or a compatible group serves it better.
 
 ## Which inputs a clip gets
 
-A shot that has a previs shot is generated from it; that is the main route. Use other routes for simple shots, strict starting-frame needs, or requirements the previs/reference route cannot satisfy; document the choice.
+A shot that has a previs shot uses it as the blocking authority; that is the main route. Use other routes for simple shots, strict starting-frame needs, or requirements the previs/reference route cannot satisfy; document the choice.
 
-- **Previs route** (default for every shot in a scene with a previs node):
+- **Single-shot previs route** (for a generation serving one previs Shot):
   1. Connect the previs node to the clip's `video` input with that shot (`connections[].shot`). Klox exports it as a grey stand-in video and sends it as the blocking and camera reference (positions, moves, timing, scale, camera move). The purpose notes already describe what the reference controls; identify which color is which subject and add action intent, expression and sound without specifying a conflicting camera move.
   2. Connect the shot's accepted keyframe as its opening picture, where `get_capabilities` → `referenceVideoRoutes[model].openingFrame` says: `firstFrame` → as `firstFrame`; `image` (the model cannot take a first frame beside reference media) → on the `image` input with `purpose: "opening"`, and Klox requests that the clip opens on it. This is a prompted reference, not a strict first-frame guarantee; verify the output. Do not repeat the purpose rule in the prompt. `null` means no opening-picture input beside video: use a verified direct route or choose another model.
   3. Connect required asset references and voices when that route permits them. An image-reference opening needs those subjects; a strict opening can carry appearance, but voice-reference compatibility is a separate check. Connect a location asset only when its reference does not fight the keyframe's framing.
 
   Pick a model listed in `referenceVideoRoutes`. Keep the previs shot within the model's reference-video duration range; choose a Shot for this clip's intended scene window. Check total reference duration and all combination limits, not just one file's duration.
 
+- **Grouped previs route** (for a generation serving several previs Shots): use each covered Shot's live blocking/camera reference. Follow the canvas skill's [Shot connection and reference-mapping procedure](https://klox.ai/agent/skills/canvas/references/previs.md#connect-a-shot) for connection parameters, input order, absolute reference numbers and missing-Shot recovery. Write timed sections that join end to start and name the mapped reference each cut follows. For example, when the verified mapping is S03 → video2 and S04 → video3: `(0:00–0:03) S03: follow @[S03 blocking](video:2) for blocking and camera …`, `(0:03–0:05) cut to S04: follow @[S04 blocking](video:3) …`. State that cuts happen in order with characters and states continuous. Reference duration/count limits may constrain a group more than output duration; split it when essential blocking cannot fit. The model may blend references or ignore a cut boundary, so inspect one representative group against each Shot's reference before expanding the route to the episode. Check action, camera, identity, state and sound continuity at every cut, and use actual generated cut points for the edit.
 - **First-frame route** (no previs shot; the clip generates no spoken line, or the model takes voice references together with a first frame): connect the keyframe as `firstFrame`. Connect no asset nodes; the keyframe already carries identity, look, location and state, so check those on the keyframe, not on the clip's connections.
 - **Reference route** (no previs shot; the clip generates any spoken line on a model that does not take voice references with a first frame, or a multi-cut clip): connect the keyframe on the `image` input with `purpose: "opening"`, plus the asset nodes for the characters whose identity or voice must hold. A clip has one opening frame: in a multi-cut clip only the first cut's keyframe gets `opening`; connect the other cuts' keyframes with no purpose and say in the prompt which cut, and from which second, each one shows ("@image3 is cut 2, from 3 s").
 - **Same-take continuation** (one continuous camera view split into generations): extract and review the previous take's actual last frame, use it on the legal opening route, and compare it to the next previs window's start. Repair a mismatch before generating; do not pass two competing motion references without a verified reason. This dependency waits for the previous take.
@@ -43,11 +50,13 @@ Run the canvas skill's pre-generation checks on every clip. Start the action fro
 
 ## Audio production
 
-Use a video model that generates picture and audio together. Check `get_capabilities` for audio generation and reference-audio support before setting up the clip. Enable audio when configurable; if the chosen model cannot generate audio, choose a compatible video model before production. For clips with dialogue, prefer a model that also takes reference audio; without it, each character's voice can drift between clips, so review voice consistency shot by shot.
+For groups assigned dialogue or event sounds, use a video model that generates picture and audio together. Check `get_capabilities` for audio generation and reference-audio support before setting up the clip. Enable audio for those sound-source groups; if the chosen model cannot supply the assigned audio, choose a compatible route before production. For pure reaction or picture coverage with no assigned sound, set `generateAudio: false` when supported; otherwise plan to mute its native audio in the edit. Prompting silence is not equivalent to disabling audio. For clips with dialogue, prefer a model that also takes reference audio; without it, each character's voice can drift between clips, so review voice consistency shot by shot.
+
+Before generation, check each grouping-plan row against the saved node options and sound assignments. A missing audio-setting entry, a sound-source group with audio disabled, or an unassigned group with audio enabled when the route supports disabling it fails the production handoff. When the route cannot disable audio, record that capability exception and the explicit edit mute plan. This check is independent of whether shots are grouped.
 
 The prompt carries the clip's dialogue verbatim, with speaker, delivery and timing. Distinguish visible speech, off-screen speech and voice-over; only the visible speaker should lip-sync. Connect accepted character voice references where supported, and keep each character's voice direction consistent across clips. Verify the generated audio for complete wording, correct speaker, voice consistency and synchronization with visible speech.
 
-Each clip generates its own dialogue and the event sounds the sound plan assigns to it, dry and close-mic, with no ambience, room tone or music: the edit lays continuous ambience and music under the whole scene, and a clip that brings its own room tone jumps at every cut. A clip that carries over another shot's sound generates nothing of it. Dialogue that continues across a cut plays from its source clip in the edit, so its own take is never re-spoken by another clip.
+Each sound-source group generates only the dialogue and event sounds the sound plan assigns to it, dry and close-mic, with no ambience, room tone or music: the edit lays continuous ambience and music under the whole scene, and a clip that brings its own room tone jumps at every cut. A clip that carries over another shot's sound generates nothing of it. Dialogue that continues across a cut plays from its source clip in the edit, so its own take is never re-spoken by another clip.
 
 ## Prompt structure
 
@@ -57,11 +66,11 @@ Write the prompt in one language, with dialogue quoted verbatim in the language 
 2. **Continuity locks** of every look in the shot, verbatim.
 3. **Action**: from the reviewed opening state, the shot's action (one move or a short chain) with its trigger, contact and landing, then the secondary reaction (the listener's face, cloth, hair, dust).
 4. **Camera**: with previs, retain its selected camera and temporal intent without writing a second camera path; without previs, describe the shot list's camera and timing. State one continuous shot when cuts are not intended.
-5. **Sound**: start with the sound block below. Every line this clip is the source of, with speaker, delivery and timing, quoted once, verbatim from the screenplay; mark visible speech, off-screen speech and voice-over. Each event this clip is the source of, with its trigger, material, force, count and natural decay. Name the sounds that an earlier shot already made and this one must not repeat.
-6. **End state**: the shot list's end state, reached within the cut length and held to the end of the requested duration.
+5. **Sound**: state the audio assignment; for sound-source groups, use the sound block below. Every line this clip is the source of, with speaker, delivery and timing, quoted once, verbatim from the screenplay; mark visible speech, off-screen speech and voice-over. Each event this clip is the source of, with its trigger, material, force, count and natural decay. Name the sounds that an earlier shot already made and this one must not repeat.
+6. **End state**: each covered shot's end state, reached within its planned segment; hold the final group's end state through any requested trim handle.
 7. **Text**: "no subtitles, captions or overlaid text". If the opening frame shows in-world text (a phone screen, a sign), add "keep the text on the <surface> unchanged" (see Text below).
 
-The sound block, at the start and again at the end (models ignore a single no-music line):
+For groups generating assigned audio, use the sound block at the start and again at the end (models ignore a single no-music line):
 
 ```text
 Sound: only the dialogue, breaths and the listed action sounds. Dry, close-mic dialogue, minimal reverberation. No ambience, no room tone, no background music, no score, no transition sounds.
@@ -69,7 +78,7 @@ Sound: only the dialogue, breaths and the listed action sounds. Dry, close-mic d
 End: only the listed dialogue and action sounds; no music.
 ```
 
-Never turn the clip's audio off to avoid music: that loses the dialogue.
+Keep audio enabled on groups supplying assigned dialogue or events; handle unwanted music through the sound-repair procedure. Audio-free coverage instead describes silent performance and uses the audio setting above.
 
 For a multi-cut generation, write timed sections that join end to start and add up to the duration: `(0:00–0:03) Shot 1, insert: …`, and list which reference image is which cut's frame before the sections.
 

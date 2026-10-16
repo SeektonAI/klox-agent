@@ -92,11 +92,49 @@ Keep production notes on existing text nodes: scene/previs ID, Shot ID and windo
 ## Connect a Shot
 
 - `previs → imageGen`, target `image`: the selected Shot's frame 0 as a layout guide, for that moment and camera.
-- `previs → videoGen`, target `video`: the selected Shot's exported video as a blocking/camera reference.
-- Set `connections[].shot` when adding the edge or `updateNodes[].previsShots` for an existing connection. The default first Shot is convenient only when it is actually the intended observation.
+- `previs → videoGen`, target `video`: each selected Shot's exported video as a separate blocking/camera reference, in the chosen order.
+- Set `connections[].shot` when adding the edge or `updateNodes[].previsShots` for an existing connection. Both accept one Shot ID or an ordered list. With no explicit selection, the first Shot is used; choose it deliberately when it is the intended observation.
 - Match the aspect ratio and reference window to the shot, and check model input duration, output duration, total reference limits and combination rules. A short planned cut does not justify an illegal reference file.
 - `get_capabilities.referenceVideoRoutes[model].openingFrame` indicates the opening-picture input beside video: `firstFrame`, `image` with purpose `opening`, or null. Presence in this map does not prove voice compatibility or motion fidelity. Connect needed identity/state/voice assets through the allowed route, within its limits.
 - `opening` is a prompted reference when on `image`, not a strict first-frame guarantee. At most one picture gets that purpose. Other timed keyframes have no purpose and are identified by clip time in the prompt.
+
+### Multiple Shot inputs and reference numbering
+
+For a group covering several Shots from one scene, use one connection from that scene's previs node and select its Shots in input order. Each remains a separate registered export with its own freshness check; the connection does not concatenate them. Prefer these live exports to manually spliced uploads for ordinary grouped production. Another scene's previs uses its own connection.
+
+These are operation fragments for `apply_workflow_change`; replace node IDs with actual IDs or the local IDs of nodes created in that change. Add a connection with:
+
+```json
+{
+  "connections": [
+    {
+      "from": "scene-previs-id",
+      "to": "clip-node-id",
+      "targetHandle": "video",
+      "shot": ["S03", "S04"]
+    }
+  ]
+}
+```
+
+Change the ordered selection on an existing connection with:
+
+```json
+{
+  "updateNodes": [
+    {
+      "id": "clip-node-id",
+      "previsShots": [{ "from": "scene-previs-id", "shot": ["S04", "S03"] }]
+    }
+  ]
+}
+```
+
+Use a string for one Shot. Setting an existing selection to `null` explicitly clears it and returns to the default first Shot; it does not disconnect the input. Check the current tool schema and model limits for list size, reference counts, individual and total reference duration, and any reference-plus-output limit. Each selected Shot consumes one media input; a legal output duration does not establish that its references fit.
+
+Reference numbers count **all video inputs to the target node**, not each connection separately. Preserve connection order and the chosen order within each connection, and include any other video inputs when mapping references. For example, if another video is input 1 before the `["S03", "S04"]` connection, these Shots are `video2` and `video3`. Write mentions as `@[S03 blocking](video:2)` and `@[S04 blocking](video:3)` for that mapping; they become the model's `@video2` and `@video3` tokens. `get_workflow` returns the ordered Shot selection on each edge, not an absolute `videoN` label. Derive and record the full node's reference mapping before writing timed prompt sections, and recheck all video mentions after adding, removing or reordering inputs.
+
+If a selected Shot is deleted or its ID changes, `get_workflow` keeps its ID in the edge's selection and reports it in `missingShots`. Execution returns `previs_shot_missing` rather than dropping that input or substituting another Shot. Read the current timeline, replace or remove the missing selection through `updateNodes[].previsShots`, then update the grouping notes and recheck the full reference mapping and timed prompt sections before retrying. Clearing the selection to the first Shot is appropriate only when that is the intended replacement. Missing or stale exports for existing Shots instead follow the export-readiness procedure below.
 
 A clip's scene window becomes a reference starting at 0; its generated take can have different actual timing. Keep final source in/out separate and review before editing. Extra model duration needs an explicit hold or usable coverage; no automatic tail-hold or arbitrary-time production image-export option exists today. A separate short Shot can provide another moment's frame 0 if needed, within the existing contract. The review page neither uploads its arbitrary-frame images nor registers them in `renders`. Generation references come from the registered Shot exports described above.
 

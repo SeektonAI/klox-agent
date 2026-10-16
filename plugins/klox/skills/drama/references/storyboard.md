@@ -87,6 +87,10 @@ Run the canvas skill's pre-generation checks on every shot. Give each shot separ
 - For close shots, state the crop precisely (cut at the collarbone, face in the upper third). A location reference tends to widen the frame; if close keyframes keep coming out wide, drop the location asset for that shot and describe the background in words.
 - In-world text (a phone screen, a sign) only where the story needs it, short and written exactly; check it on the keyframe. Overlay text (captions, titles, chat bubbles) never goes into a keyframe; it is added in the edit.
 
+### Generation grouping handoff
+
+Retain the edit Shot IDs and coverage even when several shots will share a generation. Before creating video nodes, prepare the [generation grouping plan](clips.md#generation-groups-before-video-nodes): continuous action or dialogue passages are candidates; precise contact and state-reveal inserts may remain independent. Grouping changes production units, not the approved story or cut intent. Map each sound item to its generating group, then resolve it to the actual video node for the structured plan.
+
 ### Sound plan
 
 Write the scene's sound plan as a sound plan node (`addNodes` kind `soundPlan`) once its clips exist as video nodes, and keep it current when shots change. Use actual video node IDs for `source` and `continuesOver` (or their local IDs within the same change), not shot labels from the table below. Keep the prose table as a planning view, not a substitute for the structured node. Each line and key sound from the screenplay is one item:
@@ -97,7 +101,7 @@ Write the scene's sound plan as a sound plan node (`addNodes` kind `soundPlan`) 
 | door-close-01 | event | yes      | S01    | S02          | The heavy door hits the frame once, rings | rings out about 1.5 s; S02 silent |
 | phone-ring-01 | event | no       | S18    | S19          | The phone rings in pairs                  | stops when answered               |
 
-- **One source shot per sound.** That clip generates it; the shots it carries over never generate it again, they start after it. A reverse angle of the same action does not repeat the sound.
+- **One source generation per sound.** That group generates it once, even across several cuts. Picture coverage uses the same source audio rather than generating another performance. In the structured plan, `continuesOver` lists only other video nodes, never the source node itself; cuts within one group are tracked in the cut list. A reverse angle of the same action does not repeat the sound.
 - **Cut after the sound finishes** when you can. When the cut lands on an impact, the source clip still runs long enough for the tail, and the edit carries the tail over the next shot.
 - **Keep a new line out of a carried tail.** Until the pilot episode shows that overlapping a tail with new dialogue sounds right, start the next shot's line after the tail ends: the two clips' sound cannot be separated once mixed.
 - **Critical** marks what the film fails without: lines are normally critical; decorative sounds are not.
