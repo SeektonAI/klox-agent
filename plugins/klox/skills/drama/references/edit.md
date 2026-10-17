@@ -1,11 +1,11 @@
-# Stages 7–8 · Edit and review
+# Stages 6–7 · Edit and review
 
 ## Cut list
 
 Start from the stage 3 timing cut and shot plan. The compose timeline is the Cut List: playback order, exact files, source in/out and cut lengths live there. Preserve stable shot references and replace placeholders instead of rebuilding from generation order. An `EP01 · Cut List` text node, if useful, holds only edit intent, sound/caption decisions and unresolved choices keyed by shot reference, not a second timing or take table.
 
 - **Plan and take**: the video node's `shotWindows` records intended local timing; prompt timestamps cannot prove observed source ranges. Inspect the take and use the canvas skill's [review and replacement procedure](https://klox.ai/agent/skills/canvas/SKILL.md#reviews-gates-and-shot-replacement) for cut checks, version-bound confirmation and `replace_cut_shot`. Replacement preserves slot position and duration, needs enough confirmed footage when windows exist, and reports detached audio that remains on the old file. Revise edit length or sound explicitly when required. Overlapping coverage does not mean an event should repeat.
-- **Source in / out** inside the actual generated clip, with the reason. Several shots may take different ranges of one multi-cut clip; map the actual generated cut boundaries instead of assuming prompt timestamps were followed. Preserve usable portions if another part needs a separate repair; a clip generated longer than its shot is trimmed here. The reason: start on the first readable frame or mid-motion; end once the action or reaction has read, or cut on motion into the next shot. Trim the frames where the model settles in or drifts.
+- **Source in / out** inside the actual generated clip, with the reason. A Wan 3.0 extension repeats the clip it extends first: its range starts after that (`replace_cut_shot` defaults there), and the join to the earlier clip is checked where the edit cuts. Several shots may take different ranges of one multi-cut clip; map the actual generated cut boundaries instead of assuming prompt timestamps were followed. Preserve usable portions if another part needs a separate repair; a clip generated longer than its shot is trimmed here. The reason: start on the first readable frame or mid-motion; end once the action or reaction has read, or cut on motion into the next shot. Trim the frames where the model settles in or drifts.
 - **Sound**: what plays under the shot and carries over the cut (a line continuing off screen, a door ringing out). Picture may cut in the middle of a line; check the sound timeline as its own track. For carried sound, name the source clip, its source in/out and where it plays on the episode timeline.
 - **Caption / title**: the exact words from the screenplay, timed to the line, plus any `[TITLE]` overlay at its beat.
 - Cut at the cliffhanger's peak; let the last sound ring into black only if the screenplay asks.
@@ -23,7 +23,7 @@ Start from the stage 3 timing cut and shot plan. The compose timeline is the Cut
 
 Run the clips → edit and freshness handoff checks from the skill: every compose clip points at the reviewed file with valid source in/out, required gates are released and relevant cut/sound checks passed or have declared exceptions; picture cuts may fall inside a line, but the final sound timeline has every line and key sound exactly once, complete, none cut off or doubled, tails intact; the film's sound check is current; captions match the script word for word. Then watch the cut against the scene plan and write findings in the skill's format.
 
-## Review (stage 8)
+## Review (stage 7)
 
 Watch the cut with the user and answer:
 
@@ -33,4 +33,4 @@ Watch the cut with the user and answer:
 - Do characters stay recognisable and consistent from shot to shot?
 - Which shots needed the most attempts, and which failure causes recur?
 
-For the weakest moment, trace it back through the layers (cut → generated take → visual inputs → shot/timing cut → scene previs/plan → screenplay) and name the first layer where it got weaker. Write the answers, group count, first-pass footage ratio, actual generation ratio, retake rate with its numerator and denominator, credits and hours spent into the `Brief` production log (use the definitions in [clips.md](clips.md#generation-groups-before-video-nodes)), and turn each recurring problem into a concrete change for the next episode's screenplay, scene plan or storyboard.
+For the weakest moment, trace it back through the layers (cut → generated take → visual inputs → shot/timing cut → scene previs/plan → screenplay) and name the first layer where it got weaker. Report the review answers and their evidence in your reply. Keep only lasting production decisions and a concise summary of group count, first-pass footage ratio, actual generation ratio, retake rate with its numerator and denominator, credits and hours spent in the `Brief` production log (use the definitions in [clips.md](clips.md#generation-groups-before-video-nodes)). Turn each recurring problem into a concrete change for the next episode's screenplay, scene plan or storyboard; do not store a second review report on the canvas.

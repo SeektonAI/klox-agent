@@ -1,14 +1,15 @@
-# Stages 2–4 · Assets, scene previs, timing cut and visual keyframes
+# Stages 2–3 · Assets, scene previs and timing cut
 
 ## Stage 2 · Visual bible
 
 Use the asset-design skill for design exploration, accepted anchors, required views and reference review; use the canvas skill for asset storage and tool calls. Identity belongs on the asset, outfits on looks and temporary states on asset nodes. Main characters need references suited to the planned framing, including face close-ups for dialogue; turnarounds are added when the required angles justify them. Use accepted voice clips for speaking characters where supported. Asset development can progress alongside blocking once identities and essential dimensions are established. Finish only the references needed by the upcoming shots. On top of that:
 
-- **Continuity locks.** For each look, write the few visible facts that must never drift as a short phrase you will paste verbatim into every keyframe and clip prompt that shows it ("navy jacket, cream shirt, short straight hair"). Keep the list short: only what the viewer would notice changing.
+- **Continuity locks.** Store the few visible facts that must stay fixed in each look's asset description ("navy jacket, cream shirt, short straight hair"). Use them to build references and review clips. Shot prompts add only what the connected assets, state images and other references do not already carry.
 - **Location design sequence.** New or substantially redesigned locations require generated and confirmed design boards, followed by a generated and confirmed master-view anchor, before deriving camera views or lighting references. Follow asset-design locations; use the accepted anchor as an actual image input. Reuse existing accepted designs when no substantial redesign is requested.
-- **Tone frames.** For every location in every lighting state the episode uses, derive one empty wide shot from the accepted location anchor (`TONE · <location> · <lighting state>`) and get it approved. Every keyframe in that location and light connects it to the `image` input with purpose `tone`; Klox then tells the model it sets colour, light and texture only, so the prompt does not repeat it.
+- **Location coverage.** Clips take the location's look from its asset references, not from a keyframe, so a recurring location needs accepted references facing each main camera direction the episode uses (with their camera where saved), not one master view. Add the missing directions in asset design before the clips that need them.
+- **Tone frames.** For every location in every lighting state the episode uses, derive one empty wide shot from the accepted location anchor (`TONE · <location> · <lighting state>`) and get it approved. Every clip in that location and light connects it to the `image` input with purpose `tone`; Klox then tells the model it sets colour, light and texture only, so the prompt does not repeat it.
 - Never use a story frame as an asset reference.
-- **State images.** For every plot-relevant state whose side or direction the viewer could catch drifting (an injury, an arrow, a stain, a bandage, a mark), make a state image with the asset-design skill before keyframes and put it on the asset node that feeds the shots showing it.
+- **State images.** For every plot-relevant state whose side or direction the viewer could catch drifting (an injury, an arrow, a stain, a bandage, a mark), make a state image with the asset-design skill before the clips and put it on the asset node that feeds the shots showing it.
 
 ## Stage 3a · Scene plan (`EP01 · Scene Plan`)
 
@@ -43,7 +44,7 @@ Every shot names the scene and beats it carries (`EP01-SC02 beats 3–5`, or `EP
 
 - Lay out the sound first: every line, voice-over and key sound, with reactions and silent actions. That timeline is the scene's length. Then place cuts on it.
 - A line must fit the shots that carry it at the normal speaking rate. Split a long line across speaker and listener shots instead of asking for faster speech.
-- The cut length is a storyboard decision; the requested generation duration is set at stage 5 and may be longer (see clips.md). Never shorten a shot's job to fit a model minimum.
+- The cut length is a storyboard decision; the requested generation duration is set at stage 4 and may be longer (see clips.md). Never shorten a shot's job to fit a model minimum.
 - Default: shots of 2–5 seconds averaging the profile's target (about 2.5). An insert can be shorter; a line that must land can run longer. Depart when the scene plan calls for a held shot, and say why.
 
 ### Each shot
@@ -57,7 +58,7 @@ Camera: static; the viewer needs to see who takes possession
 Start → action → end: Character A holds the key above Character B's open right palm → Character A places and releases it into that palm → Character B closes the right hand around the key
 Sound: room tone, the key touching the palm; no dialogue
 Shows: Character A and Character B (hands only), key
-Keyframe prompt: Close insert of Character A holding one key above Character B's open right palm, before contact. Both hands and the key are fully visible against the office background, neutral indoor light. No captions or extra keys.
+Route: own clip from the S07 previs Shot; a hand-over is exact contact, so an opening keyframe is justified here
 ```
 
 - **Job**: one reason this shot exists. If two neighbouring shots have the same job, merge them.
@@ -75,17 +76,12 @@ Keyframe prompt: Close insert of Character A holding one key above Character B's
 - Every cut changes size, angle or relationship. Two neighbouring shots with the same size, angle and relationship are one shot.
 - Keep screen direction and eyelines consistent through a scene. For every previs-backed shot, read its computed **Screen map** with a `get_workflow` detail request (`nodeIds`, optionally `shots`). Use its frame positions, facing, side-up and height estimates during review rather than reasoning them out or copying the full map into text. These samples do not prove visibility or contact throughout the shot: inspect targeted frame sequences through its `reviewUrl` around important events, using the canvas skill's review procedure. If no previs exists or a Screen map is unavailable, tell the user why and review the available frame evidence without claiming a computed check. Shot and reverse shot on the same side of the axis keep each subject on the same side of the frame; a cut that swaps them crosses the line and needs a reason and a re-establishing shot.
 
-### Keyframe prompts
+### Start and end states
 
-An opening keyframe is the reviewed visual target for the shot's start. On a strict first-frame route it is supplied as `firstFrame`; on a previs/reference route it may be a normal reference image with `purpose: "opening"`. The latter requests the start through prompting and still needs output review; it is not a strict frame guarantee.
+Run the canvas skill's pre-generation checks on every shot. Give each shot separate **Start state** and **End state** fields; the clip starts from the start state and its action reaches the end state, and asset nodes take the start state. Write a visible condition (an injury, a dressing, a stain, a held object) on every shot that shows it, not only in the scene header. For a condition with a side, add to the shot's Screen map which way the subject's head points in the frame, which side of the body faces the camera, and so where the condition appears on screen, or "not visible in this shot". Derive it once from the scene's blocking; when the camera would hide a condition the story needs seen, move the camera, not the wound. The side itself comes from the state image, not from "anatomical left" in the text.
 
-Run the canvas skill's pre-generation checks on every shot. Give each shot separate **Start state** and **End state** fields; its keyframe prompt and asset nodes take only the start state. Write a visible condition (an injury, a dressing, a stain, a held object) on every shot that shows it, not only in the scene header. For a condition with a side, add to the shot's Screen map which way the subject's head points in the frame, which side of the body faces the camera, and so where the condition appears on screen, or "not visible in this shot". Derive it once from the scene's blocking; when the camera would hide a condition the story needs seen, move the camera, not the wound. Keyframe prompts describe that frame geometry (head toward frame left, the upward flank); the side itself comes from the state image, not from "anatomical left" in the text. A matched END frame is its own image node, made from the inspected START frame.
-
-- Describe only what is visible at that instant: who is where, facing which way, what they hold, their expression, framing, light. Anything that happens later in the shot stays out.
-- Name characters with asset mentions (`@[Character A](asset:<id>)`); appearance comes from the references, so describe pose, position and state, not faces or outfits, apart from the continuity lock of every look in the frame, pasted verbatim.
-- Use one style sentence for the whole episode and one light sentence per scene, identical in every keyframe.
-- For close shots, state the crop precisely (cut at the collarbone, face in the upper third). A location reference tends to widen the frame; if close keyframes keep coming out wide, drop the location asset for that shot and describe the background in words.
-- In-world text (a phone screen, a sign) only where the story needs it, short and written exactly; check it on the keyframe. Overlay text (captions, titles, chat bubbles) never goes into a keyframe; it is added in the edit.
+- In-world text (a phone screen, a sign) only where the story needs it, short and written exactly; when it must read, it is one of the few reasons for a keyframe or a text reference image. Overlay text (captions, titles, chat bubbles) is added in the edit.
+- **Optional keyframes.** Make one only for a picture the previs and assets cannot carry, and record the reason. It describes only what is visible at the shot's start, names characters with asset mentions, uses the episode's style sentence and the scene's light sentence, and states close crops precisely. A matched END frame is its own image node made from the accepted START. Its route into the clip is in [clips.md](clips.md#which-inputs-a-clip-gets).
 
 ### Generation grouping handoff
 
@@ -109,24 +105,19 @@ Write the scene's sound plan as a sound plan node (`addNodes` kind `soundPlan`) 
 
 ## Stage 3c · Greybox timing cut
 
-Before final keyframes, put selected previs observations into a compose timeline in edit order, using each clip's `{previsNodeId, shotId}` reference. Previs owns scene windows, the sound plan owns sound assignments, and the compose timeline owns planned cut length and playback order. Coverage windows can overlap, but the cut should not accidentally repeat an event. Record dramatic reasons for a same-camera continuation or a new-angle cut; do not duplicate the timing table in text. Shots without spatial or motion needs may use sketches or existing frame placeholders.
+Before generating clips, put selected previs observations into a compose timeline in edit order, using each clip's `{previsNodeId, shotId}` reference. Previs owns scene windows, the sound plan owns sound assignments, and the compose timeline owns planned cut length and playback order. Coverage windows can overlap, but the cut should not accidentally repeat an event. Record dramatic reasons for a same-camera continuation or a new-angle cut; do not duplicate the timing table in text. Shots without spatial or motion needs may use sketches or existing frame placeholders.
 
-Connect previs exports directly to a compose node's `video` input and save the intended edit as `composeTimeline`; follow the canvas skill's [greybox-cut procedure](https://klox.ai/agent/skills/canvas/references/previs.md#export-readiness-and-greybox-cuts). Inspect playback of that assembled rough cut before final keyframes. Local ffmpeg assembly remains an option for accessible files and temporary speaker/line cards; it is not required to bridge previs and compose. Timing aids are not synthesized episode dialogue. Never invent an export URL.
+Connect previs exports directly to a compose node's `video` input and save the intended edit as `composeTimeline`; follow the canvas skill's [greybox-cut procedure](https://klox.ai/agent/skills/canvas/references/previs.md#export-readiness-and-greybox-cuts). Inspect playback of that assembled rough cut before generating clips. Local ffmpeg assembly remains an option for accessible files and temporary speaker/line cards; it is not required to bridge previs and compose. Timing aids are not synthesized episode dialogue. Never invent an export URL.
 
 For visual inspection, open the previs node's `reviewUrl` and use the canvas skill's [frame-review procedure](https://klox.ai/agent/skills/canvas/references/previs.md#inspect-frames-on-the-review-page). Before repairs, freeze a baseline with `freeze_previs_snapshot`; after saving, compare the affected frames and revisit later shots whose positions, props, cameras or continuity depend on the change. Use camera and top views together for passage or clearance questions, and adjacent-shot end/start frames for continuity. Record the actual frame range and step; unmodeled details remain unverified.
 
 If files cannot be obtained, frame sequences plus the cut list and sound windows support a limited visual-and-plan review. Actual continuous scene playback can add timing evidence, but the review page's stills cannot establish motion between samples or dynamic rhythm. Report which evidence is available and that the assembled edit is unverified; neither this limited review nor separate scene playback is a rendered animatic. Continue within the user's existing scope with those limits explicit. Review images are not registered generation references; required production exports still come from the owner's editor.
 
-Check the hook, event/reaction order, axis, readable scale and reveals, and whether cuts and pauses give the planned sound enough time. Fix timing and coverage here. For projects without previs, a static animatic from sketches or available frames serves this purpose; do not require a new set of expensive final images merely for this review.
+Check the hook, event/reaction order, axis, readable scale and reveals, and whether cuts and pauses give the planned sound enough time. Fix timing and coverage here. For projects without previs, a static animatic from sketches or available frames serves this purpose; do not generate final images merely for this review.
 
-## Stage 4 · Visual keyframes
+## Continuous shots
 
-1. Complete and review the asset and light references actually required by the approved shots.
-2. For each important shot, connect its own previs Shot to the image node's `image` input for the opening layout, plus the required assets and tone reference. Say which stand-in color is which subject. For a shot without previs, use a sketch or other framing-matched layout guide.
-3. An accepted master can establish the scene's look and reveal geography across angles. Do not require a wider image for a setup that has no dramatic need for one. Each new angle uses its own previs layout; an appearance reference must not override it. If cropping a master for a tighter shot, verify both perspective and action state; a crop cannot create a new camera position or a later scene moment.
-4. Compare every generated keyframe with its planned start, computed Screen map where available, assets and accepted scene views: dimensions and landmark positions, facing, occlusion, state, light and appearance. Shared 3D geometry is consistent by construction; generated images can still drift and must be inspected.
-5. Derive repairs from an accepted source rather than chaining imperfect children. Fix side errors through targeted edits and state images. Keep end-state facts out of start-frame prompts. High-risk shots may need additional reviewed moment/end images; only the opening image uses the opening purpose on a clip.
-6. Storyboard grids are optional review boards, never direct clip inputs. For a simple direct asset-plus-previs route, omit a separate keyframe only when that route has been verified and the omission is within the production scope; inspect the generated opening carefully.
+While cutting, mark which neighbouring shots belong to one **continuous shot**: picture, action and time carry straight on from one to the next, whether or not the camera moves (a continuous follow is one; two moments from the same fixed camera at different times are not). A continuous shot is generated once when one generation can hold it; when it cannot, its later part extends the earlier one at stage 4 instead of starting fresh. Place each such join between two lines of dialogue, never inside one. A cut to another camera is a new, independent clip.
 
 ## Stage review
 
@@ -138,8 +129,8 @@ Before showing the shot list, run the script → shot list handoff checks from t
 - List every departure from a default (shot length, coverage pattern) with its reason.
 - Does every previs-backed shot name its setup, Shot ID and scene window, and does its Screen map come from that Shot? Are omitted previs routes and unavailable checks explained? List each cut that crosses the axis, with its reason.
 
-After keyframes, review each against its planned scene moment and neighbouring shots: positions, held objects, states and screen direction carry across the cut, and each subject sits where the available Screen map puts it. A keyframe whose blocking is wrong is fixed through its layout guide or master, not by adding more position words to the prompt. Check sides by derivation, not by asking whether something "is on the left": find where the head points and which surface faces the camera, work out where the condition must appear, then compare it with the Screen map and the state image, cropping in when it is small. A keyframe that is right except for a side is repaired with a targeted edit, not rerolled.
+After the first clips, review each against its planned scene moment and neighbouring shots: positions, held objects, states and screen direction carry across the cut, and each subject sits where the available Screen map puts it. A clip whose blocking is wrong is fixed through its previs Shot, not by adding more position words to the prompt. Check sides by derivation, not by asking whether something "is on the left": find where the head points and which surface faces the camera, work out where the condition must appear, then compare it with the Screen map and the state image, cropping in when it is small. A clip that is right except for a side is regenerated with a corrected state image, not with more side words.
 
 ## Gate
 
-Review the stage 3 timing cut (or the explicitly limited review with its available visual and playback evidence) before final keyframes. After stage 4, show accepted keyframes and their agreement with that plan. Reuse decisions already approved, report what remains unverified, and give the clip-production credit estimate before starting work outside the current budget.
+Review the stage 3 timing cut (or the explicitly limited review with its available visual and playback evidence) before generating clips, with the continuous shots marked. Reuse decisions already approved, report what remains unverified, and give the clip-production credit estimate before starting work outside the current budget.

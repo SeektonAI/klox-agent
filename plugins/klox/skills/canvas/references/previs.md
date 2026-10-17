@@ -2,6 +2,8 @@
 
 Read this for previs-backed images or clips, greybox timing reviews, or edits to a shared scene. Current tool schemas and `get_capabilities` are authoritative. Drama's storyboard and clips references own creative planning and the production gates.
 
+For final video generation, the exported previs is a white-model blocking reference combined with asset images. Read [white-model reference and rendering](video-models.md#white-model-reference-and-rendering) for the input responsibilities, shot prompt and motion review. The reference uses purpose `layout`; its neutral shading and coloured stand-ins do not define the finished look.
+
 ## Write one shared scene
 
 Use `addNodes` kind `previs` with `timeline`; update with `updateNodes[].timeline`, replacing the whole timeline. Keep unrelated actors, tracks and Shots when changing a scene. Read it again after user/agent edits rather than overwriting from an old copy.
