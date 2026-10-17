@@ -7,7 +7,7 @@ description: Make episodic short dramas on Klox - develop the story, block scene
 
 This skill owns story and production decisions. The canvas skill owns tool operations, uploads, credits and input routing; asset-design owns reusable visual references. Keep the screenplay, scene previs, visual assets and edit plan connected without duplicating their authority.
 
-Skill version 1.4.23. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.24. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
@@ -26,7 +26,7 @@ Review before handing a stage to the user. Report findings as:
 
 > **Where** (scene, shot or node) · **Evidence** (line, frame or timestamp) · **Effect on the viewer** · **Fix** · **Owning stage**
 
-Fix current-stage findings, return upstream changes to their owner, and redo only affected downstream work. User approval does not substitute for inspecting the output. Mark checks that cannot be performed as unverified.
+Fix current-stage findings, return upstream changes to their owner, and redo only affected downstream work. User approval does not substitute for inspecting the output. Tell the user which checks could not be performed.
 
 ## Stages and handoffs
 
@@ -59,7 +59,7 @@ Read only the needed reference:
 - **Previs → timing cut:** each previs-backed shot names the node, Shot ID and scene-time window. Actor proportions, state transitions and cameras support the shot's job. Use computed Screen maps to locate issues, then inspect frame sequences through the node's `reviewUrl`; follow the canvas skill's [review procedure](https://klox.ai/agent/skills/canvas/references/previs.md#inspect-frames-on-the-review-page) for baseline freezing and comparison after repairs. Report the actual frames and sampling step, not a claim of full playback review. Continuous playback or an accessible greybox cut is still needed for dynamic rhythm; static samples and a scene played from a free camera are not an assembled cut. Shots without previs state their route and the visual evidence used instead.
 - **Plan → keyframes and clips:** a generation grouping plan maps stable Shot IDs to video nodes, requested durations, planned picture use, input routes, sound ownership and split-on-failure decisions (see [clips.md](references/clips.md#generation-groups-before-video-nodes)). Each clip names its shot(s), requested duration, reference window and planned cut length. Its accepted opening picture matches the intended start, or its verified direct-reference route explains the omission. The pre-generation review checks every row's explicit audio setting against saved node options and sound ownership, including documented capability exceptions and mute plans. Inputs and audio settings satisfy current capabilities; identity, look, location and state reach the model through that route. A clip has at most one image marked opening. Lines appear verbatim in the prompt of their designated sound-source clip, not in every coverage angle.
 - **Clips → edit:** every cut references an inspected take with source in/out inside the actual clip, and its sound check passed or its failure is handled. The sound timeline includes each line and key sound exactly once, complete, with correct speaker and its tail intact; captions match the screenplay. Compare motion and end state with the plan before replacing its placeholder.
-- **Freshness:** use available asset-outdated flags, current previs export status and recorded source/take IDs. After a relevant upstream change, identify which pictures, clips and cuts need rechecking. Titles and display edits alone do not invalidate pictures. When provenance is not exposed, record known changes and unverified dependencies instead of claiming a timestamp check proves freshness.
+- **Freshness:** use available asset-outdated flags, current previs export status and recorded source/take IDs. After a relevant upstream change, identify which pictures, clips and cuts need rechecking. Titles and display edits alone do not invalidate pictures. When provenance is not exposed, tell the user the known changes and unverified dependencies instead of claiming a timestamp check proves freshness.
 
 ## Canvas and production contract
 

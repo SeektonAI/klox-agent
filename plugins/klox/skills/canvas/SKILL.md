@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.4.23. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
+Skill version 1.4.24. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
 
 ## Before you start
 
@@ -16,6 +16,17 @@ Skill version 1.4.23. The latest version is always at https://klox.ai/agent/skil
 - Reading an existing canvas, including a pasted link or continuing earlier work: keep calling `get_workflow` with `cursor: next` until `next` is null. The overview abbreviates long text (`truncated` and length fields); an `oversized` entry requires a detail read. Read `Brief` and any node you will act on in full with `nodeIds`; for a large previs node add `shots`. Use each edge's `order` for input numbering, not its position in the paged response. A `workflow_revision_conflict` means restart the overview; comments and task states can change between pages without a graph revision, so recheck current evidence before acting. The canvas is the whole project state; another agent or the user may have changed it since.
 - Read `openComments` in `get_workflow`. They are notes the user pinned to nodes on the canvas for you, usually the most precise feedback you will get ("this shot is too dark"). Handle them as part of the current request, or tell the user why you did not, and close each with `resolve_comment` and one sentence on what you did.
 - Give the user the canvas `previewUrl` early so they can watch alongside you; it opens without signing in and has an Edit button for them. If it is null, give `url` instead.
+
+## What text nodes hold
+
+Text nodes hold what a person decided: the Brief, the script, the shot list's dramatic jobs, grouping decisions and edit intent. Put everything else where it belongs:
+
+- Computed state (exports, readiness, prices, gate and check status, Screen maps, shot windows, selected takes): read it from `get_workflow` when needed; never write it into text.
+- Review evidence, what you inspected, what remains unverified, a migration or copy mapping: report it to the user in your reply. Wherever these skills say to record or report evidence, they mean that reply. Do not create review, evidence, migration or reading-guide nodes.
+- Planned pictures (keyframes, state references): create the image nodes themselves, titled and prompted, instead of listing them in a requirements or register node.
+- Actions the previs cannot model: `shots[].notes`.
+
+State each fact once, in the node that owns it, and point to that node instead of repeating it. Write what is decided, not what is not: no disclaimers such as "not an approval" or "no X is claimed"; approvals and their absence are visible on the canvas. Rewrite a node in place when a decision changes, without dated sections or history. Keep each node readable in about a minute (roughly 3,000 characters); split a long plan by scene rather than growing one node.
 
 ## Making a video from scratch
 

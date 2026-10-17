@@ -14,7 +14,7 @@ Inspect the actual image and compare it to the accepted anchor and current asset
 
 Report a defect with node/view, visible evidence, the intended use it breaks and the smallest correction. Keep taste choices separate: a preference for a different palette is not a continuity error. Repair only affected views; do not redesign the accepted character to accommodate a bad child image.
 
-For a state image containing a prop or another project asset, compare that object's shape, scale and visible details to its accepted reference as well as checking state placement and contact. A correct wound side does not establish that the arrowhead matches the prop used in later shots. Record what was checked and any unverified details; do not give the whole image a blanket reviewed status while a required check remains open.
+For a state image containing a prop or another project asset, compare that object's shape, scale and visible details to its accepted reference as well as checking state placement and contact. A correct wound side does not establish that the arrowhead matches the prop used in later shots. Report what was checked and any unverified details to the user; do not give the whole image a blanket reviewed status while a required check remains open.
 
 When inspection is unavailable, say which checks are unverified and do not save the candidate as an accepted reference. User-supplied accepted designs need no new exploration, but their suitability for a new input route still needs checking.
 
@@ -50,4 +50,4 @@ Affected shots: <IDs when replacing a used reference>
 
 The fields record actual decisions, not a new database schema or a claim that all files exist. Omit irrelevant fields. Preserve existing library references not affected by the request; include the prior references when the API replaces a reference array. Keep stable asset/look IDs when changing their content.
 
-Replacing generation references can advance asset versions and make existing results outdated. Before replacement, identify the affected production work and follow the canvas skill's selection and generation authorization rules. Do not regenerate downstream shots automatically. If the tools expose no reliable freshness evidence, record the known changes and affected shots rather than claiming a mechanical freshness check passed.
+Replacing generation references can advance asset versions and make existing results outdated. Before replacement, identify the affected production work and follow the canvas skill's selection and generation authorization rules. Do not regenerate downstream shots automatically. If the tools expose no reliable freshness evidence, tell the user the known changes and affected shots rather than claiming a mechanical freshness check passed.
