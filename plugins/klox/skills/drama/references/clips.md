@@ -6,22 +6,22 @@ Keep edit Shot IDs independent of generation units. Before creating video nodes,
 
 Start by considering 2–4 shots over 6–15 seconds. Use 15–30-second groups only when supported by the current route and the passage is simple, coherent and easy to review. These are starting suggestions, not required lengths or model capability tables; read `get_capabilities` for actual limits. Keep high-risk contact, critical prop details, state reveals, strict lip-sync moments and shots needing independent repair separate when a failed detail would force an expensive group retake. A single-shot generation remains appropriate when that is the cheaper reliable route.
 
-Write an episode generation grouping plan in existing text nodes before clip production. Each row records group ID, ordered Shot IDs, planned picture use per shot, requested duration and trim handles, model and input route, assigned sound item IDs, an explicit audio-setting entry on every row, estimated credits and where to split if the group fails. Each planned Shot ID belongs to one group and has a planned local interval; actual take IDs and inspected source ranges replace those estimates after generation. Keep keyframes for the covered cuts unless an already verified direct route justifies their omission. Update the structured sound plans with actual video node IDs once the groups exist. These records are production notes, not new API fields.
+Write an episode generation grouping plan in existing text nodes for the decisions: why shots share a group, the model/input route and where to split on failure. Keep stable Shot IDs independent of node IDs. Store planned local intervals on the video node as `updateNodes[].shotWindows` with full `{previsNodeId, shotId}` references; use the scene sound plan for assigned source nodes and the node options for requested duration and audio settings. Keep keyframes for covered cuts unless a verified direct route justifies their omission. After generation, confirmed intervals and the compose timeline own observed source ranges; do not replace the text plan with another editable copy of task/file IDs, prices or timings.
 
 Target a **first-pass footage ratio** (initial requested video seconds / planned picture seconds) of about 1.3 or less. A higher value triggers review and a recorded reason, not a hard rejection: complete dialogue, sound tails over other pictures and high-risk coverage may justify it. Also report the **actual generation ratio** (requested video seconds across all attempts / final picture seconds). Keep both in the production log with group count, retake rate (groups needing another attempt / groups attempted), actual credits and the causes of excess or retries. During production, mark ratios against the still-planned edit as provisional.
 
-Compute estimated credits from the actual model policy (`VIDEO_MODEL_POLICIES` when working in the repository) or current tool estimates for each model, route, resolution and other billable options. Compare first-pass cost plus expected retry and analysis/repair costs. With otherwise equal per-second pricing, reducing requested seconds reduces first-pass cost proportionally; mixed models or settings need a weighted credit calculation. Minimize expected total cost of accepted footage, not node count alone. Generate and review a representative group before expanding a new grouping route to the episode, within the existing budget. If one cut fails, preserve usable ranges and generate the missing coverage separately when continuity and sound allow it; avoid rerendering accepted material merely to keep the original grouping.
+Read each node's `readiness.credits` and the overview's `estimate`; a null price is unknown, not zero, and a price with `creditsEstimated` is a pre-input estimate to confirm once its upstream results exist. Compare first-pass cost plus expected retry and analysis/repair costs. With otherwise equal per-second pricing, fewer requested seconds reduce first-pass cost proportionally; mixed models or settings need the actual estimates. Minimize expected total cost of accepted footage, not node count alone. Generate and review a representative group before expanding a new grouping route within the existing budget. Preserve usable ranges and produce missing coverage separately when continuity and sound allow it.
 
 Never connect a storyboard grid to a video node.
 
 ## Scene, reference, generated and edit time
 
-Keep these apart in the shot list and cut list. Store them as production notes using existing IDs, not invented API fields:
+Use the structured fields as the authority: previs owns scene windows, the video node's `shotWindows` owns planned take intervals, valid confirmations own observed shot identity and source intervals, and compose clips own final source ranges and cut length. Read those values when reviewing; do not maintain duplicate timing tables. Record only reasons and unresolved choices in production notes. Distinguish these time bases:
 
-- **Scene window**: previs node, Shot ID and global start/end. Its export starts at local time 0: scene [4, 8] becomes reference [0, 4]. Record the relevant planned action and sound events.
+- **Scene window**: previs node, Shot ID and global start/end. Its export starts at local time 0: scene [4, 8] becomes reference [0, 4]. Use the scene timeline for action timing and the sound plan for sound events.
 - **Reference duration**: the exported window, within the selected model's input limits. This is distinct from output duration.
 
-- **Cut length**: how long the shot plays in the episode (from the storyboard).
+- **Cut length**: how long the shot plays in the episode, saved as its compose clip duration.
 - **Requested duration**: what the clip node asks the model for. It follows the model's allowed values, covers the combined planned picture use of the shots it serves plus necessary trim handles, and is long enough for every line generated in it, including the part heard over later shots. A 2-second shot on a model whose minimum is 4 seconds requests 4.
 - **Source in and out**: where the edit takes the shot from inside the generated clip.
 
@@ -114,7 +114,7 @@ Estimate the speaking time of every line at the normal rate and make sure it fit
 
    Stay within the authorized retry cap; during an active production run, also respect the shared per-check limit. Stop repairing that shot/check at the limit, record the classification, and continue independent work that still fits the scope and budget.
 
-5. Record credits spent, attempts per shot and the failure causes for the production log.
+5. For takes with `shotWindows`, run `check_cuts` and confirm inspected source intervals before replacing rough-cut placeholders. Follow the canvas skill's [review and replacement procedure](https://klox.ai/agent/skills/canvas/SKILL.md#reviews-gates-and-shot-replacement); cut timing alone does not identify a shot. Record failure causes and lasting decisions in the production log, deriving spend and attempt metrics from actual tasks.
 
 ## When a sound check fails
 

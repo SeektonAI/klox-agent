@@ -2,12 +2,9 @@
 
 ## Cut list
 
-Start from the stage 3 timing cut and shot plan. Update `EP01 · Cut List` on the episode canvas with the accepted takes: one row per shot in playback order. Retain shot IDs and edit intent; replace placeholders instead of rebuilding the episode from generation order.
+Start from the stage 3 timing cut and shot plan. The compose timeline is the Cut List: playback order, exact files, source in/out and cut lengths live there. Preserve stable shot references and replace placeholders instead of rebuilding from generation order. An `EP01 · Cut List` text node, if useful, holds only edit intent, sound/caption decisions and unresolved choices keyed by shot reference, not a second timing or take table.
 
-| Shot | Scene / previs Shot window | Group / video node / selected take | Source in | Source out | Cut length | Why here | Sound | Caption / title |
-| ---- | -------------------------- | ---------------------------------- | --------- | ---------- | ---------- | -------- | ----- | --------------- |
-
-- **Plan and take**: before generation, map every planned Shot ID to one group and its planned local interval. After inspection, each cut-list row identifies that group, actual video node, selected result/task/file ID and actual source in/out. Planned prompt timestamps remain estimates and cannot stand in for observed source ranges. Record the original scene window in production notes. Overlapping coverage does not mean the event should repeat in the edit. If timing or performance changed, revise affected cuts explicitly. These are text records, not new MCP fields.
+- **Plan and take**: the video node's `shotWindows` records intended local timing; prompt timestamps cannot prove observed source ranges. Inspect the take and use the canvas skill's [review and replacement procedure](https://klox.ai/agent/skills/canvas/SKILL.md#reviews-gates-and-shot-replacement) for cut checks, version-bound confirmation and `replace_cut_shot`. Replacement preserves slot position and duration, needs enough confirmed footage when windows exist, and reports detached audio that remains on the old file. Revise edit length or sound explicitly when required. Overlapping coverage does not mean an event should repeat.
 - **Source in / out** inside the actual generated clip, with the reason. Several shots may take different ranges of one multi-cut clip; map the actual generated cut boundaries instead of assuming prompt timestamps were followed. Preserve usable portions if another part needs a separate repair; a clip generated longer than its shot is trimmed here. The reason: start on the first readable frame or mid-motion; end once the action or reaction has read, or cut on motion into the next shot. Trim the frames where the model settles in or drifts.
 - **Sound**: what plays under the shot and carries over the cut (a line continuing off screen, a door ringing out). Picture may cut in the middle of a line; check the sound timeline as its own track. For carried sound, name the source clip, its source in/out and where it plays on the episode timeline.
 - **Caption / title**: the exact words from the screenplay, timed to the line, plus any `[TITLE]` overlay at its beat.
@@ -24,7 +21,7 @@ Start from the stage 3 timing cut and shot plan. Update `EP01 · Cut List` on th
 
 ## Before showing the cut
 
-Run the clips → edit and freshness handoff checks from the skill: every cut-list row points at a current clip result with source in and out inside the clip; picture cuts may fall inside a line, but the final sound timeline has every line and key sound exactly once, complete, none cut off or doubled, tails intact; the film's sound check is current; captions match the script word for word. Then watch the cut against the scene plan and write findings in the skill's format.
+Run the clips → edit and freshness handoff checks from the skill: every compose clip points at the reviewed file with valid source in/out, required gates are released and relevant cut/sound checks passed or have declared exceptions; picture cuts may fall inside a line, but the final sound timeline has every line and key sound exactly once, complete, none cut off or doubled, tails intact; the film's sound check is current; captions match the script word for word. Then watch the cut against the scene plan and write findings in the skill's format.
 
 ## Review (stage 8)
 
