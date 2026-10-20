@@ -31,6 +31,24 @@ Use previs for ordinary travel, staging and camera motion. In each timed section
 
 Describe each key event through its cause, action and visible result. Carry the relevant end state into the next shot until a motivated action changes it. Put each requirement in its owning shot section; use one shared statement for clip-wide continuity. Let the model develop natural gait, weight transfer, expressions, gestures, breathing and small pauses within the planned pacing. Critical close-ups receive added precision for their named detail and supporting reference.
 
+## Direct performance through intention and response
+
+For a dramatic exchange or emotional turn, give the character a playable objective: what they want from the other person or situation at this moment. Ground it in the accepted scene. Describe the tactic they use and, where it changes the delivery, the subtext beneath the quoted words. Express this as a short connected direction in the owning shot section, scaled to the scene's needs.
+
+Make the response relationship clear: what the character notices or hears, how they interpret it, and how that response changes their next action or delivery. Give listeners their own intention and response to the exchange, including during another character's line. Carry the emotional result into the next shot. In a solo scene, the response can be to an object, sound, discovery or changing circumstance.
+
+Let the model realize that intention through natural expression, gaze, breath, gesture and fine timing appropriate to the character. Specify a concrete gesture or exact moment when it carries an approved story fact, essential interaction or critical close-up detail. Choose stillness, ongoing activity and camera movement from the dramatic intent; give speech, listening and meaningful reactions enough time within the planned passage.
+
+Review whether the objective, subtext and response are readable in the generated performance, alongside complete dialogue and continuity. Use viewing notes to refine the unclear dramatic beat and preserve effective choices in the accepted take. Apply this guidance with previs, image references and text-only inputs alike.
+
+## Select camera, physical and light detail for the shot
+
+Use the following guidance where it helps communicate the shot's dramatic purpose or a key event. Choose the relevant aspects and scale their detail to the shot, using the accepted previs, assets and tone references as their authorities.
+
+- **Camera motivation.** When camera behavior matters, describe what it follows, reveals or brings to the viewer's attention, and relate the movement or held framing to that purpose. With previs, express the purpose of its planned camera; develop a changed camera in the owning Shot before revising the generation prompt. Both a held view and a moving view can serve the scene.
+- **Key physical feedback.** When an interaction's credibility or meaning depends on its physical result, describe the causal response: weight and support, momentum and settling, contact and material deformation, or an environment reacting to the action. Select the response that makes the key event readable and let generation develop its natural secondary motion and fine timing. Critical close-ups can receive precise detail and a supporting reference for the named interaction.
+- **Light, color and space.** When light or color helps establish depth, attention or scene continuity, relate it to a material or surface, a motivated light source and direction, and its role in the composition. Describe foreground, subject and background relationships where they clarify the intended image. Across camera changes, preserve the accepted world-space sources and allow their screen positions and surface reflections to change with the view.
+
 ## Put each sound with its shot
 
 Describe each dialogue line and event sound once in its owning timed section, beside the action that triggers it. Specify order, count and synchronization only where they matter to the scene.
@@ -57,6 +75,7 @@ The time ranges guide pacing; allow natural performance and fine timing.
 Shot 1:
 (<planned range>) Follow @[First shot blocking](video:1).
 <Story-critical spatial relationship, visible start, event cause and intended result, using the connected asset mentions.>
+<Character objective, delivery subtext and the response that motivates the next beat, where relevant.>
 <Assigned dialogue with its speaker, and event sounds beside their triggers.>
 
 Shot 2:

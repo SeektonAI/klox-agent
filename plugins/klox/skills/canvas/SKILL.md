@@ -7,7 +7,7 @@ description: Create and edit AI videos on Klox canvases - plan a short video wit
 
 Klox (https://klox.ai) is a visual canvas for AI video creation. You work on it through the `klox` MCP tools; the user watches and adjusts the same canvas in the browser. This skill is the working method. The tools' own descriptions and the server instructions are the contract, and they win if the two ever disagree.
 
-Skill version 1.4.27. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
+Skill version 1.4.28. The latest version is always at https://klox.ai/agent/skills/canvas/SKILL.md.
 
 ## Before you start
 
@@ -32,7 +32,7 @@ State each fact once in its owning node and refer to that node elsewhere. Write 
 
 For an episodic drama (a series, a pilot, a microdrama, a story adapted into episodes), also follow the Klox drama skill: it sets the stages, their order and what each must deliver. For designing reusable characters, locations or props, also follow the Klox asset-design skill. This section still covers the tools.
 
-1. **Settle the creative decisions that change the result**, and only those the user has not already given or delegated: what it promotes or tells, where it will be shown (which sets the aspect ratio, for example 9:16 for short-video platforms), total length, style or mood, language of any on-screen text or voice. Ask them together in one short message. Choose suitable model, resolution and technical defaults within the requested scope. If the user says "you decide", decide and state your assumptions.
+1. **Settle the creative decisions that change the result**, and only those the user has not already given or delegated: what it promotes or tells, where it will be shown (which sets the aspect ratio, for example 9:16 for short-video platforms), total length, style or mood, language of any on-screen text or voice. Ask them together in one short message. Use Seedance 2.5 (`seedance-2.5`) as the default video model. Follow the user's model choice; choose another model when the required input route or capability calls for it, checking `get_capabilities`. Choose suitable resolution and technical defaults within the requested scope. If the user says "you decide", decide and state your assumptions.
 2. **Create the canvas** with `create_workflow`. Every canvas belongs to a project, one piece of work: leave `projectId` out for a new piece, or pass the `projectId` of the existing one (find it with `list_projects`) when this canvas continues it, for example the next episode of a series, so it shares that project's assets. Then write a text node titled `Brief` holding the decisions and constraints. Update it whenever the user changes them.
 3. **Plan scenes, then their outputs** with `apply_workflow_change`. For a film whose blocking, scale or camera matters, read [previs.md](references/previs.md) before building it:
    - a script/Brief and a shot list with dramatic jobs, sound sources and planned cuts;

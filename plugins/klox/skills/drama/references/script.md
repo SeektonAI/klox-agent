@@ -23,7 +23,7 @@ CHARACTER A (turning to Character B): You said you had the key.
 
 - One line per beat. A beat is either an action (`[ACTION]`, one visible thing happening) or one line of dialogue (`NAME (delivery): line`).
 - Other tags: `[VO]` narration or inner voice, `[OS]` spoken off screen, `[SFX]` a sound that matters, `[TEXT]` in-world text the story needs, with its surface (`[TEXT] phone screen: "Payment overdue"`), `[TITLE]` overlay text added in the edit (`[TITLE] 8 HOURS EARLIER`), `[CONT]` a state downstream must keep (Character B holds the key in the right hand from here).
-- Put quoted dialogue on its speaker line. Put subtext in the delivery note and visible action in the action line.
+- Put quoted dialogue on its speaker line. Put subtext in the delivery note and visible action in the action line. For a dramatic exchange or emotional turn, establish what each character wants, how they try to obtain it, and which response changes their next choice. Use concise delivery and action notes grounded in the accepted story; leave the specific physical performance to generation.
 - Give every line and every sound that matters a stable id when the screenplay is accepted (`L03`, `door-close-01`). Note for each sound what makes it, the material, force and count, whether it is heard on or off screen, and why the story needs it. An off-screen sound (a knock, a phone in another room) is a sound event like any other; list it. A sound that happens again later gets a new id; one action seen from two angles keeps its id. These ids become the scene's sound plan items.
 
 ## Timing
@@ -59,7 +59,7 @@ Before the gate, write findings in the review format from the skill, then fix th
 
 - Time it (word count at the speaking rate, or the user's read-through if they did one) and list the timestamps of hook, every emotional beat, the payoff and the cliffhanger.
 - Name the opposition in each scene and what it does.
-- For each scene, state what changed between its first and last beat.
+- For each scene, state what changed between its first and last beat, and how the characters’ objectives and responses make that change readable.
 - List every place you departed from a default, with the reason.
 
 ## Gate

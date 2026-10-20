@@ -7,12 +7,12 @@ description: Make episodic short dramas on Klox - develop the story, block scene
 
 This skill owns story and production decisions. The canvas skill owns tool operations, uploads, credits and input routing; asset-design owns reusable visual references. Keep the screenplay, scene previs, visual assets and edit plan connected through their owning records.
 
-Skill version 1.4.27. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.28. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
 1. **Story before pixels.** Fix a story or production issue at the earliest stage that owns its cause.
-2. **Each fact has an owner.** The screenplay owns events, lines and continuity facts; assets own identity, looks, reference states, fixed location geometry (set) and base character size (body); shared scene previs owns scene-specific spatial overrides, blocking, planned event windows and cameras; generation develops natural performance and fine action rhythm; the shot list and cut list own dramatic purpose, coverage and edit order. Preserve confirmed upstream facts and revise them explicitly in their owning stage when needed.
+2. **Each fact has an owner.** The screenplay owns events, lines and continuity facts; assets own identity, looks, reference states, fixed location geometry (set) and base character size (body); shared scene previs owns scene-specific spatial overrides, blocking, planned event windows and cameras; the screenplay and shot prompts supply playable objectives, relevant subtext and response relationships, while generation develops their natural physical performance and fine action rhythm; the shot list and cut list own dramatic purpose, coverage and edit order. Preserve confirmed upstream facts and revise them explicitly in their owning stage when needed.
 3. **One main dramatic job per shot.** A shot can contain a short action chain and reactions. Split it when the dramatic job changes; choose generation units separately from edit shots.
 4. **Block and cut before final rendering.** When space, motion or camera matter, use shared scene previs and review its shots in edit order before generating video. Static sketch animatics remain useful for shots without previs.
 5. **Previs and assets drive the clip.** A clip is generated straight from its previs Shot (blocking and camera) and the assets of what it shows (identity, look, location, state, voice) as the default route. In the prompt, briefly reinforce story-critical spatial relationships, action causality and continuous states, with ordinary travel and staging supplied by previs and natural performance and fine rhythm developed by generation. Make a keyframe only for a picture neither can carry (an exact hand contact, text that must read) and record why. Continue one continuous shot across generations through video extension: the later clip continues the earlier one from its last frame.
