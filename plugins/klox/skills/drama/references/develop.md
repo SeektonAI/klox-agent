@@ -5,7 +5,7 @@ Goal: a story engine that keeps producing choices, costs and changes of state, l
 ## Start from what the user has
 
 - **Only an idea or genre**: propose two or three directions that differ in mechanism (how the protagonist fights, who opposes them, what it costs), not just in names and jobs. Let the user pick or combine.
-- **A novel, synopsis or notes**: list what is fixed (characters, relationships, ending), what is open, and what is unclear. Base every adaptation choice on the given text; never fill gaps from the title alone. Cut to one main line and at most one subplot, merge characters who do the same job, and note each cut or merge with a one-line reason.
+- **A novel, synopsis or notes**: list what is fixed (characters, relationships, ending), what is open, and what is unclear. Ground adaptation choices in the supplied text and identify unresolved source details. Choose story scope to fit the format; propose cuts or character merges only when they improve the adaptation, with a reason.
 - **Direction already settled**: go straight to the episode map.
 - **A finished screenplay**: skip this stage.
 
@@ -28,9 +28,9 @@ A table of the moments the audience came for, each with its episode:
 | --- | ------- | ---- | ---------------------- | --------- |
 
 - Place the major payoffs first, then fill gaps with minor ones.
-- Keep the gaps between payoffs within the profile's payoff gap, and land the first major payoff by the profile's episode. A block can end on a big payoff, but the first major one does not wait for the block's last episode.
+- Keep the gaps between payoffs consistent with the agreed payoff rhythm and first major payoff target, when specified.
 - Types follow the genre (for romance: a claim of protection, a jealousy reversal, a public choice; for revenge: humiliation turned around, an exposed lie).
-- A recurring object belongs on the asset list only if losing it would break a payoff.
+- A recurring object needs an asset when its recognisable appearance, continuity or story function must persist across shots.
 
 ## Episode map (`Episode Map`)
 
@@ -46,7 +46,7 @@ One row per episode:
 
 ## Episode 1 entry
 
-Compare at least three openings before choosing:
+When the opening is unresolved, compare materially different approaches as useful:
 
 - **Chronological**: the earliest point that works, as a baseline.
 - **Payoff-first**: the moment of strongest audience reward that also shows who the protagonist is, what crushes them and what they want.
@@ -58,24 +58,8 @@ Hook types to pick from, by what the episode actually does: action already under
 
 ## Rhythm profile
 
-Propose these numbers in the `Brief` for the user to accept or change. Starting points for AI live-action vertical drama:
-
-| Field              | Meaning                                                                           | Start          |
-| ------------------ | --------------------------------------------------------------------------------- | -------------- |
-| Episode length     | Target seconds per episode                                                        | from the Brief |
-| First hook         | The hook is visible and readable by                                               | 3 s            |
-| Beat interval      | Longest gap between emotional beats (a conflict line, an action, new information) | 20–30 s        |
-| Opposed reversals  | Reversals involving a concrete opponent, per episode                              | at least 1     |
-| End on peak        | Cut at the peak, no cooldown after it                                             | yes            |
-| Reprise            | Next episode opens on the previous episode's last beat                            | yes            |
-| Voice-over share   | Narration and inner voice as a share of spoken words                              | at most 30%    |
-| Average shot       | Mean shot length                                                                  | about 2.5 s    |
-| Close shots        | Close-ups, medium close-ups and inserts as a share of shots                       | at least 45%   |
-| Payoff gap         | Longest run of episodes without a payoff                                          | 3              |
-| First major payoff | Episode by which the first big payoff lands                                       | 1              |
-
-These are defaults to start from, not quality laws. A quiet, slow-burn series can relax beat interval and shot length; say why in the Brief.
+Set a rhythm profile in the `Brief` when it helps the production: target episode length, intended hook, pace of turns and payoffs, use of narration, shot rhythm and ending. Derive targets from the user's format, genre and audience. Suggest values only for unresolved choices; use the accepted pace to guide shot length, coverage and performance.
 
 ## Gate
 
-Show the user, in one message: the storylines cut, the characters merged, the major payoff episodes, the episode 1 entry with its first frame, and the rhythm profile. Do not write episode screenplays until they agree. A wrong skeleton costs one round; a wrong batch of screenplays costs all of them.
+Show the user, in one message: the storylines cut, the characters merged, the major payoff episodes, the episode 1 entry with its first frame, and the rhythm profile. Write episode screenplays after the story structure is approved or selection is delegated. A wrong skeleton costs one round; a wrong batch of screenplays costs all of them.
