@@ -1,0 +1,40 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Klox",
+    "zh": "Klox"
+  },
+  "description": {
+    "en": "Klox plugins for DeepSeek Harness",
+    "zh": "适用于 DeepSeek Harness 的 Klox 插件"
+  },
+  "plugins": [
+    {
+      "name": "klox",
+      "title": "Klox",
+      "description": {
+        "en": "Build and edit AI videos on Klox canvases: the Klox MCP server plus the Klox skills",
+        "zh": "在 Klox 画布上制作和修改 AI 视频：Klox MCP 与 Klox Skill"
+      },
+      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSIxMDI0IiByeD0iMjAwIiBmaWxsPSIjRjk3MzE2Ii8+CjxwYXRoIGQ9Ik01ODYuMTc3IDgzOUw1NzQuNTU4IDY2Ni4zMTVMNDYzLjAxMyA1OTIuODMxVjgyNy45NzhIMjYyVjE4NUw0NDMuODE4IDIwOS4xNThMNDQ3Ljg2MiA0NTQuNjgzTDU1MC45MDEgMzgwLjgzM0w1NzguNzg3IDIwNy4xODNMNzQ2LjY2MyAyMjAuMThMNzMwLjQ4OSA0MzAuODAxTDYwOS4yNzYgNTA0LjY1Mkw3MzMuNTEgNTU4LjU3TDc2MiA4MjAuMDc4TDU4NS4zODcgODM4LjQ0OUw1ODYuMTc3IDgzOVoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=",
+      "author": "Klox",
+      "homepage": "https://klox.ai/agent",
+      "repository": {
+        "url": "https://github.com/SeektonAI/klox-agent",
+        "directory": "plugins/klox"
+      },
+      "versions": [
+        {
+          "version": "1.4.30",
+          "publishTimestamp": 1792560740,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/SeektonAI/klox-agent",
+            "commit": "f5b8718701991e89a9e08b170f2af7d5c67d7456",
+            "path": "plugins/klox"
+          }
+        }
+      ]
+    }
+  ]
+}
