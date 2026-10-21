@@ -1,0 +1,27 @@
+# DeepSeek Harness 的 Klox 组合包：Klox MCP 和三个 Skill。
+#
+# DSH 的 MCP 客户端只支持静态 headers，没有 OAuth，所以经 mcp-remote 桥接：它走动态注册
+# 和浏览器 OAuth（回环回调），token 存在 ~/.mcp-auth。版本固定，升级时一并升插件版本。
+# 回调默认只等 30 秒，首次使用可能要注册账号、验证邮箱，所以放宽到 120 秒。
+- insert:
+    - id: klox-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: klox
+        transport: stdio
+        command: npx
+        args:
+          [
+            '-y',
+            'mcp-remote@0.14.3',
+            'https://klox.ai/mcp',
+            '--auth-timeout',
+            '120',
+          ]
+        env: {}
+        cwd: !!js process.cwd()
+        toolCallTimeoutMs: 300000
+        failOnStartupError: false
+
+    - id: klox-skills
+      name: 'klox/skills'

@@ -23,7 +23,7 @@ Asset mentions identify the subject and its appearance; previs mentions such as 
 
 Keep the existing planned time ranges and `video:N` bindings when reorganizing prose. Number references by the node's actual input order, including all videos and ordered shot selections. A visible mention label may be renamed while preserving its bound type, index and asset ID.
 
-For previs-backed generation, keep each corresponding previs video connected with its layout role. It guides spatial relationships, camera, framing and key event order; natural performance and fine action timing belong to generation. Planned time ranges guide pacing and may drift slightly unless an exact cut or synchronization is explicitly required; assets supply the finished appearance, and reviewed state/contact images carry fine visual details. Preserve this reference route during prompt revisions.
+For previs-backed generation, connect each corresponding previs video with its layout role. The white-model reference owns camera position and movement, framing, shot order and planned cut windows, spatial relationships, scale, actor routes and object choreography. Assets supply identity, finished appearance and accepted states; tone references supply the chosen light and color. The prompt interprets the story and directs the performance within that plan. Generation realizes natural physical acting, expressions, gestures, breath and fine action rhythm inside the shot windows. When a scene needs more time or a changed camera, revise the owning previs plan and its exports together with the generation timing and prompt.
 
 ## Keep the spatial meaning and action causality readable
 
@@ -33,7 +33,7 @@ Describe each key event through its cause, action and visible result. Carry the 
 
 ## Direct performance through intention and response
 
-For a dramatic exchange or emotional turn, give the character a playable objective: what they want from the other person or situation at this moment. Ground it in the accepted scene. Describe the tactic they use and, where it changes the delivery, the subtext beneath the quoted words. Express this as a short connected direction in the owning shot section, scaled to the scene's needs.
+For a dramatic exchange or emotional turn, state the character's motive (why the situation matters), immediate goal (what they want from the other person now), and tactic (how they try to achieve it). Include an obstacle or delivery subtext where it makes the attempt readable. Ground these in the accepted scene and express them as connected acting direction, with detail scaled to the passage. A short character acting block can establish intentions shared across several shots; each owning shot then describes the stimulus and reciprocal response that changes the next attempt.
 
 Make the response relationship clear: what the character notices or hears, how they interpret it, and how that response changes their next action or delivery. Give listeners their own intention and response to the exchange, including during another character's line. Carry the emotional result into the next shot. In a solo scene, the response can be to an object, sound, discovery or changing circumstance.
 
@@ -63,7 +63,7 @@ Put the clip-wide sound design in one final block: assigned speakers, dialogue, 
 
 ## Leave transitions open unless required
 
-By default, let the model choose how to transition between the described timed shots. Use headings, time ranges and reference bindings to identify the intended content and sequence.
+With a previs edit, follow its shot order, planned cuts and continuous camera passages; use timed sections and reference bindings to map each shot. For prompt-only work, choose transition detail according to the production's approved editing intent, allowing model interpretation where that intent leaves it open.
 
 Preserve an explicitly requested transition, approved editing constraint, or genuinely continuous shot/extension when it is part of the production intent. In those cases state the needed constraint. Preserve approved action, dialogue, shot order and reference mappings throughout.
 

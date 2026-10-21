@@ -1,0 +1,35 @@
+{
+  "name": "klox",
+  "version": "1.4.30",
+  "description": "Build and edit AI videos on Klox canvases: connects the Klox MCP server and adds the Klox skills",
+  "author": "Klox <support@klox.ai> (https://klox.ai)",
+  "homepage": "https://klox.ai/agent",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SeektonAI/klox-agent",
+    "directory": "plugins/klox"
+  },
+  "keywords": [
+    "video",
+    "ai-video",
+    "storyboard",
+    "mcp"
+  ],
+  "type": "module",
+  "exports": {
+    "./skills": "./dsh/skills.js"
+  },
+  "files": [
+    "dsh",
+    "skills",
+    "assets"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/dsh-skill-filesystem": "*"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./dsh/cordis.patch.yml"
+    }
+  }
+}
