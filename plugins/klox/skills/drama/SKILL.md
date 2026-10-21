@@ -7,7 +7,7 @@ description: Make episodic short dramas on Klox - develop the story, block scene
 
 This skill owns story and production decisions. The canvas skill owns tool operations, uploads, credits and input routing; asset-design owns reusable visual references. Keep the screenplay, scene previs, visual assets and edit plan connected through their owning records.
 
-Skill version 1.4.28. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
+Skill version 1.4.29. The latest version is always at https://klox.ai/agent/skills/drama/SKILL.md.
 
 ## Principles
 
@@ -16,7 +16,7 @@ Skill version 1.4.28. The latest version is always at https://klox.ai/agent/skil
 3. **One main dramatic job per shot.** A shot can contain a short action chain and reactions. Split it when the dramatic job changes; choose generation units separately from edit shots.
 4. **Block and cut before final rendering.** When space, motion or camera matter, use shared scene previs and review its shots in edit order before generating video. Static sketch animatics remain useful for shots without previs.
 5. **Previs and assets drive the clip.** A clip is generated straight from its previs Shot (blocking and camera) and the assets of what it shows (identity, look, location, state, voice) as the default route. In the prompt, briefly reinforce story-critical spatial relationships, action causality and continuous states, with ordinary travel and staging supplied by previs and natural performance and fine rhythm developed by generation. Make a keyframe only for a picture neither can carry (an exact hand contact, text that must read) and record why. Continue one continuous shot across generations through video extension: the later clip continues the earlier one from its last frame.
-6. **Match detail to what the story needs.** Previs fixes essential blocking and action beats; models supply expression and small environmental movement. Precise hand contact and other unsupported interactions need a supported route, a separate insert or redesigned coverage, with their execution verified in the generated output.
+6. **Match detail to what the story needs.** Previs fixes essential blocking and action beats; shot prompts carry playable intentions, attempts and reciprocal responses; models develop their physical expression and secondary movement. Give emotional decisions, complete speech and physical follow-through usable time in the passage. Precise hand contact and other unsupported interactions need a supported route, a separate insert or redesigned coverage, with their execution verified in the generated output.
 
 ## Rules and reviews
 

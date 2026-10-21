@@ -37,9 +37,15 @@ For a dramatic exchange or emotional turn, give the character a playable objecti
 
 Make the response relationship clear: what the character notices or hears, how they interpret it, and how that response changes their next action or delivery. Give listeners their own intention and response to the exchange, including during another character's line. Carry the emotional result into the next shot. In a solo scene, the response can be to an object, sound, discovery or changing circumstance.
 
-Let the model realize that intention through natural expression, gaze, breath, gesture and fine timing appropriate to the character. Specify a concrete gesture or exact moment when it carries an approved story fact, essential interaction or critical close-up detail. Choose stillness, ongoing activity and camera movement from the dramatic intent; give speech, listening and meaningful reactions enough time within the planned passage.
+Let the model realize that intention through natural expression, gaze, breath, gesture and fine timing appropriate to the character. Describe the needed physical outcome and ongoing condition, leaving ordinary steps, limb trajectories and secondary movement to the performance. A continuing state can contain purposeful activity: the character keeps observing, listening, protecting an injury or preparing the next action while the necessary spatial and prop facts persist. Specify a concrete gesture or exact moment when it carries an approved story fact, essential interaction or critical close-up detail. Choose stillness, ongoing activity and camera movement from the dramatic intent; give speech, listening and meaningful reactions enough time within the planned passage.
 
 Review whether the objective, subtext and response are readable in the generated performance, alongside complete dialogue and continuity. Use viewing notes to refine the unclear dramatic beat and preserve effective choices in the accepted take. Apply this guidance with previs, image references and text-only inputs alike.
+
+## Give emotional turns usable time
+
+Choose the passage length for the complete dramatic exchange: perception of a stimulus, interpretation, a choice and the physical follow-through. Allow speech and meaningful listening or reconsideration to fit at the intended delivery pace. Use planned shot ranges to organize those beats, with flexible fine timing around the important events.
+
+When a passage feels mechanical or rushed, identify the response or decision that needs room. Within the user's authorized scope and the model's supported durations, lengthen or regroup the passage and update its prompt ranges, requested duration and planned take intervals together. For previs-backed work, keep the selected reference windows consistent with the revised action and camera plan. Review resulting cut ranges before using a new take in the edit. Choose the needed duration for that scene; let the emotional change and physical action determine its allocation.
 
 ## Select camera, physical and light detail for the shot
 

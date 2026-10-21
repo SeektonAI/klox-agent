@@ -7,7 +7,7 @@ description: Design reusable characters, locations and props for Klox production
 
 This skill owns visual asset development. The Klox canvas skill owns tool operations, budgets, uploads and asset storage; follow it when working on Klox. The drama skill owns story facts and episode production. Preserve confirmed story facts and existing design choices; bring proposed story changes to the story decision stage.
 
-Skill version 1.4.28. The latest version is always at https://klox.ai/agent/skills/asset-design/SKILL.md.
+Skill version 1.4.29. The latest version is always at https://klox.ai/agent/skills/asset-design/SKILL.md.
 
 ## Start from the material that exists
 

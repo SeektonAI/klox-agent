@@ -98,7 +98,7 @@ Two kinds, two routes:
 
 ## Dialogue capacity
 
-Estimate the speaking time of every line at the normal rate and make sure it fits the requested duration with room for the reaction. Models that run out of time drop the rest of the line without any error, and some models rewrite prompts before generating. After every clip, check that each line is spoken completely and verbatim. A line that spans several shots is generated once, in the speaker's clip, and the edit lays that audio under the other shots. For the other shots, describe the listener's silent reaction and carry the approved source audio in the edit.
+Estimate the speaking time of every line at the intended delivery pace, then allow room for the listener to perceive, interpret and choose a response and for the resulting physical action. Follow the canvas skill's [emotional timing guidance](https://klox.ai/agent/skills/canvas/references/prompt-writing.md#give-emotional-turns-usable-time) when revising duration or grouping. Keep ordinary movement and secondary gestures open around the required spatial facts and end states. Models that run out of time drop the rest of the line without any error, and some models rewrite prompts before generating. After every clip, check that each line is spoken completely and verbatim. A line that spans several shots is generated once, in the speaker's clip, and the edit lays that audio under the other shots. For the other shots, describe the listener's silent reaction and carry the approved source audio in the edit.
 
 ## Production
 
